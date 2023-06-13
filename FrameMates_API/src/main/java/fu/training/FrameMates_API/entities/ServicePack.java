@@ -75,4 +75,7 @@ public class ServicePack implements Serializable {
 	
 	@OneToMany(mappedBy="servicePack", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity=OrderDetail.class)
 	private Set<OrderDetail> servicePack_orderDetail;
+
+	@OneToMany(mappedBy="servicePack", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity=Favorite.class)
+	private Set<Favorite> servicePack_favorite;
 }

@@ -60,9 +60,6 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= OrderDetail.class)
 	private Set<OrderDetail> order_OrderDetail;
 	
-	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity=Attachment.class)
-	private Set<Attachment> order_Attachment;
-	
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= VoucherDetail.class)
 	private Set<VoucherDetail> order_VoucherDetail;
 }

@@ -70,4 +70,7 @@ public class ComboService implements Serializable {
 	@OneToMany(mappedBy="comboService", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= OrderDetail.class)
 	private Set<OrderDetail> comboService_orderDetail;
 
+	@OneToMany(mappedBy="comboService", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= Favorite.class)
+	private Set<Favorite> comboService_favorite;
+
 }

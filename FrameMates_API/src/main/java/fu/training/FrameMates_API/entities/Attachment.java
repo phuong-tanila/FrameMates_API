@@ -30,7 +30,7 @@ public class Attachment implements Serializable {
 	@Column(name="AttachPath", length=Integer.MAX_VALUE)
 	private String attachPath;
 	
-	@ManyToOne(targetEntity= Order.class, fetch=FetchType.LAZY)
-	@JoinColumn(name="OrderId", referencedColumnName="OrderId")
-	private Order order;
+	@ManyToOne(targetEntity= OrderDetail.class, fetch=FetchType.LAZY)
+	@JoinColumn(name="OrderDetailId", referencedColumnName="OrderDetailId")
+	private OrderDetail orderDetail;
 }

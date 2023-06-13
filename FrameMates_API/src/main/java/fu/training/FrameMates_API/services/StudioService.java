@@ -1,13 +1,9 @@
 package fu.training.FrameMates_API.services;
 
-import fu.training.FrameMates_API.repositories.StudioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import fu.training.FrameMates_API.entities.Studio;
 
-@Service
-public class StudioService {
+public interface StudioService {
+    long count();
 
-	@Autowired
-	private StudioRepository studioRepository;
-
+    Studio createStudio(Studio studio);
 }

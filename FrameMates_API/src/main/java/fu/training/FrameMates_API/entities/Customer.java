@@ -83,4 +83,7 @@ public class Customer implements Serializable {
 	
 	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= Payment.class)
 	private Set<Payment> customer_payment;
+
+	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= Favorite.class)
+	private Set<Favorite> customer_favorite;
 }

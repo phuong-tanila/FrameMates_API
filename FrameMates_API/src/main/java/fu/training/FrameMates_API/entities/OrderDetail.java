@@ -1,5 +1,6 @@
 package fu.training.FrameMates_API.entities;
 import java.io.Serializable;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -49,6 +50,9 @@ public class OrderDetail implements Serializable {
 	@ManyToOne(targetEntity=Order.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="OrderId", referencedColumnName="OrderId")
 	private Order order;
+
+	@OneToMany(mappedBy="orderDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity=Attachment.class)
+	private Set<Attachment> orderDetail_Attachment;
 
 	@ManyToOne(targetEntity=ComboService.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="ComboServiceId", referencedColumnName="ComboId")
