@@ -32,24 +32,24 @@ public class DbInitializer {
         this.customerService = customerService;
     }
 
-    public void init() throws IOException {
-        if(studioService.count() == 0) {
-            var jsonData = readDataFromJsonFile("data.json");
-            ObjectMapper objectMapper = new ObjectMapper();
-            List<Studio> studios = objectMapper.readValue(jsonData,  new TypeReference<List<Studio>>(){});
-            Administrator admin = new Administrator();
-            admin.setEmail("thanh@gmail.com");
-            admin.setPassword("thanh1509");
-            admin.setName("Thành");
-            administratorService.createAdmin(admin);
-            studios.forEach(s -> {
-                s.setAdmin(admin);
-                s.setAddress("Hồ Chí Minh");
-                studioService.createStudio(s);
-            });
-        }
+//    public void init() throws IOException {
+//        if(studioService.count() == 0) {
+//            var jsonData = readDataFromJsonFile("data.json");
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            List<Studio> studios = objectMapper.readValue(jsonData,  new TypeReference<List<Studio>>(){});
+//            Administrator admin = new Administrator();
+//            admin.setEmail("thanh@gmail.com");
+//            admin.setPassword("thanh1509");
+//            admin.setName("Thành");
+//            administratorService.createAdmin(admin);
+//            studios.forEach(s -> {
+//                s.setAdmin(admin);
+//                s.setAddress("Hồ Chí Minh");
+//                studioService.createStudio(s);
+//            });
+//        }
 //        objectMapper.
-    }
+//    }
     private byte[] readDataFromJsonFile(String fileName) throws IOException{
         Resource resource = resourceLoader.getResource("classpath:" + fileName);
         return FileCopyUtils.copyToByteArray(resource.getInputStream());

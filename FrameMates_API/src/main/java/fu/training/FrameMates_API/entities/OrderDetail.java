@@ -35,7 +35,7 @@ public class OrderDetail implements Serializable {
 	private Integer discount;
 	
 	@Column(name="Rating")
-	private Integer rating;
+	private Double rating;
 	
 	@Column(name="Content", length=Integer.MAX_VALUE)
 	private String content;

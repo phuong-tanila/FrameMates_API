@@ -55,6 +55,9 @@ public class ServicePack implements Serializable {
 	@Column(name="Discount")
 	private Integer discount;
 
+	@Column(name = "Rating")
+	private Double rating;
+
 	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="UpdateBy", referencedColumnName = "EmployeeId")
 	private Employee updateBy;

@@ -29,24 +29,16 @@ public class Employee implements Serializable {
 	@Column(name="EmployeeId")
 	private Integer employeeId;
 	
-	@Column(name="Name")
-	private String name;
-	
-	@Column(name="Username")
-	private String username;
-	
-	@Column(name="Phone")
-	private String phone;
-	
-	@Column(name="Avatar", length=Integer.MAX_VALUE)
-	private String avatar;
-	
 	@Column(name="Status")
 	private String status;
 	
 	@ManyToOne(targetEntity= Studio.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="StudioId", referencedColumnName="StudioId")
 	private Studio studio;
+
+	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
+	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
+	private Account account;
 
 	@OneToOne(mappedBy = "owner")
 	private Studio owner;

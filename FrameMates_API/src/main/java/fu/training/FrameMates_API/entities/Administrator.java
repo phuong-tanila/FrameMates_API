@@ -31,24 +31,13 @@ public class Administrator implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="AdminId")
 	private Integer adminId;
-	
-	@Column(name="Name", length=Integer.MAX_VALUE)
-	private String name;
-	
-	@Column(name="Email", length=Integer.MAX_VALUE)
-	private String email;
-	
-	@Column(name="Phone")
-	private String phone;
-	
-	@Column(name="Password")
-	private String password;
-	
-	@Column(name="Avatar", length=Integer.MAX_VALUE)
-	private String avatar;
-	
+
 	@Column(name="Status")
 	private Integer status;
+
+	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
+	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
+	private Account account;
 	
 	@OneToMany(mappedBy="admin", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity=Customer.class)
 	private Set<Customer> admin_customer;

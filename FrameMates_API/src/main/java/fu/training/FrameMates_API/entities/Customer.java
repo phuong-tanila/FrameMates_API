@@ -27,25 +27,10 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="CustomerId")
 	private Integer customerId;
-	
-	@Column(name="Name")
-	private String name;
-	
-	@Column(name="Email")
-	private String email;
-	
-	@Column(name="Phone")
-	private String phone;
-	
-	@Column(name="Password")
-	private String password;
-	
+
 	@Column(name="BirthDate")
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date birthDate;
-	
-	@Column(name="Avatar", length=Integer.MAX_VALUE)
-	private String avatar;
 	
 	@Column(name="CreateDate")
 	private java.sql.Timestamp createDate;
@@ -59,7 +44,11 @@ public class Customer implements Serializable {
 	@ManyToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=false)
 	private Administrator admin;
-	
+
+	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
+	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
+	private Account account;
+
 	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= VoucherWallet.class)
 	private Set<VoucherWallet> customer_voucherWallet;
 	

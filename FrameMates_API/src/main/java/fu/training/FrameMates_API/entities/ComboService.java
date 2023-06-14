@@ -52,6 +52,9 @@ public class ComboService implements Serializable {
 	@Column(name="`View`")
 	private Integer view;
 
+	@Column(name = "Rating")
+	private Double rating;
+
 	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="UpdateBy", referencedColumnName = "EmployeeId")
 	private Employee updateBy;
