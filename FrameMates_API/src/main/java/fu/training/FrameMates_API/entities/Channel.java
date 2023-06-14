@@ -27,6 +27,9 @@ public class Channel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ChannelId")
 	private Integer channelId;
+
+	@Column(name = "PushToken")
+	private String pushToken;
 	
 	@ManyToOne(targetEntity= Customer.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="CustomerId", referencedColumnName="CustomerId")
