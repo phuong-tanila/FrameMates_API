@@ -1,9 +1,13 @@
 package fu.training.FrameMates_API.studio;
 
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.studio.Studio;
 
 public interface StudioService {
     long count();
 
     Studio createStudio(Studio studio);
+
+    StudioModel getById(Integer id);
+    StudioModel updateStatus(Integer id, Integer status);
 }
