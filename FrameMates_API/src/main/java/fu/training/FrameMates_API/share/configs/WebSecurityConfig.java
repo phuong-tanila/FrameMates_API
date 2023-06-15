@@ -1,6 +1,7 @@
 package fu.training.FrameMates_API.share.configs;
 
 import fu.training.FrameMates_API.account.Account;
+import fu.training.FrameMates_API.account.JwtService;
 import fu.training.FrameMates_API.administrator.Administrator;
 import fu.training.FrameMates_API.administrator.AdministratorService;
 import fu.training.FrameMates_API.share.filters.JwtAuthenticationFilter;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,17 +28,19 @@ public class WebSecurityConfig  {
     private AccountService accountService;
     @Autowired
     private AdministratorService administratorService;
+    @Autowired
+    private JwtService jwtService;
     @Bean
     public SecurityFilterChain publicConfigure(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.disable())
-                .csrf(csrf -> csrf.disable())
-                .authorizeRequests(requests -> requests
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/services").permitAll()
                         .anyRequest().authenticated()
                 ).authenticationProvider(authenticationProvider())
-                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtService, accountService), UsernamePasswordAuthenticationFilter.class);
             if(accountService.findAll().size() == 0 ){
                 Account account = new Account();
                 account.setUsername("thanh");
