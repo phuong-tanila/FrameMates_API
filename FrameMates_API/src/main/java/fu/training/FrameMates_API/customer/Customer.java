@@ -17,11 +17,7 @@ import fu.training.FrameMates_API.order.Order;
 import fu.training.FrameMates_API.payment.Payment;
 import fu.training.FrameMates_API.reaction.Reaction;
 import fu.training.FrameMates_API.voucherwallet.VoucherWallet;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
@@ -54,10 +50,14 @@ public class Customer implements Serializable {
 	
 	@ManyToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=false)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Administrator admin;
 
 	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Account account;
 
 	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= VoucherWallet.class)
