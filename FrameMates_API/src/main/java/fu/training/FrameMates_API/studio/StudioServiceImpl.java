@@ -4,6 +4,8 @@ import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +46,13 @@ public class StudioServiceImpl implements StudioService {
 		}
 		studio.setStatus(status);
 		return studioMapper.toModel(studio);
+	}
+
+	@Override
+	public List<StudioModel> getByName(String name) {
+		List<StudioModel> studioModels = new ArrayList<>();
+		List<Studio> studios = studioRepository.findAllByNameContains(name);
+		studios.forEach(studio -> studioModels.add(studioMapper.toModel(studio)));
+		return studioModels;
 	}
 }
