@@ -16,5 +16,8 @@ public class ServicePackServiceImpl implements ServicePackService {
 		return servicePackRepository.findAll();
 	}
 
-
+	@Override
+	public ServicePack save(ServicePack servicePack){
+		return servicePackRepository.save(servicePack);
+	}
 }

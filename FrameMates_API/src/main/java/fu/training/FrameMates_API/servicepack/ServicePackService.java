@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ServicePackService {
     List<ServicePack> getAll();
+
+    ServicePack save(ServicePack servicePack);
 }

@@ -8,8 +8,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ExceptionResponse {
+    public ExceptionResponse(String exceptionType, String... messages) {
+        this.exceptionType = exceptionType + " exception";
+        this.messages = messages;
+    }
+
     public String exceptionType;
-    public String messages;
+    public String[] messages;
 }

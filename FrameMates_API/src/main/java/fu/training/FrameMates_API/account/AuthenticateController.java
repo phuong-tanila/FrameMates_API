@@ -53,9 +53,9 @@ public class AuthenticateController {
     @PostMapping("/aaa")
     public ResponseEntity create(
 //			@RequestBody CommentModel commentModel,
-            SecurityContextHolder holder
+            Authentication authentication
     ){
-        return new ResponseEntity<>(holder.getContext().getAuthentication().getPrincipal(), HttpStatus.OK);
+        return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
 }
