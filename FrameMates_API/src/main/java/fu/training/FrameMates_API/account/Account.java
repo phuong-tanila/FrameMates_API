@@ -61,13 +61,13 @@ public class Account implements Serializable, UserDetails {
     private String role;
 
     @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Employee.class)
-    private Set<Employee> account_Employee;
+    private Employee employee;
 
     @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Customer.class)
-    private Set<Customer> account_Customer;
+    private Customer customer;
 
     @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Administrator.class)
-    private Set<Administrator> account_Administrator;
+    private Administrator administrator;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
