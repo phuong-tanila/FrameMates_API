@@ -11,6 +11,9 @@ public class RecordNotFoundException extends Exception {
 	public RecordNotFoundException(String message) {
 		super(message);
 	}
+	public RecordNotFoundException() {
+		super("Cannot find record that match the specified id");
+	}
 	
 	public RecordNotFoundException(String message, Throwable t) {
 		super(message, t);
