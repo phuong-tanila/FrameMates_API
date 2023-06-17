@@ -4,7 +4,7 @@ import fu.training.FrameMates_API.customer.Customer;
 
 public interface CustomerService {
     long count();
-    Customer createCustomer(Customer customer);
+    CustomerModel createCustomer(CustomerModel customer);
 
     CustomerModel getCustomerByEmailOrPhone(String emailOrPhone);
 

@@ -15,14 +15,4 @@ public class CustomerModel {
     private String address;
     private Integer adminId;
     private Integer accountId;
-
-    public CustomerModel(Customer customer) {
-        this.customerId = customer.getCustomerId();
-        this.birthDate = customer.getBirthDate();
-        this.createDate = customer.getCreateDate();
-        this.status = customer.getStatus();
-        this.address = customer.getAddress();
-        this.adminId = customer.getAdmin().getAdminId();
-        this.accountId = customer.getAccount().getAccountId();
-    }
 }

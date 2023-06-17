@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-
+	@Autowired
+	private CustomerMapper customerMapper;
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -17,15 +18,15 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer createCustomer(Customer customer) {
-		return customerRepository.save(customer);
+	public CustomerModel createCustomer(CustomerModel customer) {
+		return customerMapper.toModel(customerRepository.save(customerMapper.toEntity(customer)));
 	}
 
 	@Override
 	public CustomerModel getCustomerByEmailOrPhone(String emailOrPhone) {
 		Customer customer = customerRepository.findByAccount_EmailOrAccount_Phone(emailOrPhone, emailOrPhone)
 				.orElse(null);
-		return customer == null ? null : new CustomerModel(customer);
+		return customer == null ? null : customerMapper.toModel(customer);
 	}
 
 	@Override

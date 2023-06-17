@@ -16,8 +16,10 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	@PostMapping()
-	public ResponseEntity<?> createCustomer(@RequestBody CreateCustomerRequest request) {
-		return new ResponseEntity<>("Under development", HttpStatus.SERVICE_UNAVAILABLE);
+	public ResponseEntity createCustomer(@RequestBody CustomerModel customer) {
+		System.out.println(customer);
+		CustomerModel customerModel = customerService.createCustomer(customer);
+		return customerModel != null ? ResponseEntity.ok(customerModel) : ResponseEntity.unprocessableEntity().build();
 	}
 
 	@GetMapping()
