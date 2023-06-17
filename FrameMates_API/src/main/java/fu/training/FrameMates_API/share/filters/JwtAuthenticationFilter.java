@@ -38,8 +38,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private AccountService accountService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.error(jwtService.toString());
-        log.error(accountService.toString());
+//        log.error(jwtService.toString());
+//        log.error(accountService.toString());
         try {
             // Lấy jwt từ request
             String jwt = getJwtFromRequest(request);
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Claims claims = jwtService.getClaimsFromToken(TokenTypeEnum.ACCESSTOKEN, jwt);
                 String userEmail = claims.getSubject();
                 UserDetails userDetails = accountService.loadUserByUsername(userEmail);
-                System.out.println(userDetails);
+//                System.out.println(userDetails);
                 if(userDetails != null) {
                     UsernamePasswordAuthenticationToken
                             authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -76,7 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        System.out.println(bearerToken);
+//        System.out.println(bearerToken);
         // Kiểm tra xem header Authorization có chứa thông tin jwt không
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
