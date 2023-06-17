@@ -1,4 +1,4 @@
-package fu.training.FrameMates_API.customer;
+package fu.training.FrameMates_API.account;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -7,7 +7,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
-public interface CustomerMapper {
-    Customer toEntity (CustomerModel model);
-    CustomerModel toModel (Customer entity);
+public interface AccountMapper {
+    Account toEntity (AccountModel model);
+    AccountModel toModel (Account entity);
 }
