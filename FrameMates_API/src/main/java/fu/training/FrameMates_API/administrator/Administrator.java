@@ -46,13 +46,13 @@ public class Administrator implements Serializable {
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	private Account account;
 	
-	@OneToMany(mappedBy="admin", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity=Customer.class)
+	@OneToMany(mappedBy="admin", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Customer.class)
 	private Set<Customer> admin_customer;
 	
-	@OneToMany(mappedBy="admin", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Studio.class)
+	@OneToMany(mappedBy="admin", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Studio.class)
 	private Set<Studio> admin_studio;
 	
-	@OneToMany(mappedBy="admin", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Voucher.class)
+	@OneToMany(mappedBy="admin", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Voucher.class)
 	private Set<Voucher> admin_voucher;
 
 }
