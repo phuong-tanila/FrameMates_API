@@ -17,7 +17,6 @@ public class CustomerController {
 	private CustomerService customerService;
 	@PostMapping()
 	public ResponseEntity createCustomer(@RequestBody CustomerModel customer) {
-		System.out.println(customer);
 		CustomerModel customerModel = customerService.createCustomer(customer);
 		return customerModel != null ? ResponseEntity.ok(customerModel) : ResponseEntity.unprocessableEntity().build();
 	}

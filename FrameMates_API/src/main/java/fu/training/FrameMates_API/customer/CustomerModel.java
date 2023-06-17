@@ -1,9 +1,6 @@
 package fu.training.FrameMates_API.customer;
 
-
-import fu.training.FrameMates_API.account.Account;
-import fu.training.FrameMates_API.administrator.Administrator;
-import jakarta.persistence.*;
+import fu.training.FrameMates_API.account.AccountModel;
 import lombok.Data;
 
 @Data
@@ -13,6 +10,5 @@ public class CustomerModel {
     private java.sql.Timestamp createDate;
     private Integer status;
     private String address;
-    private Integer adminId;
-    private Integer accountId;
+    private AccountModel accountModel;
 }
