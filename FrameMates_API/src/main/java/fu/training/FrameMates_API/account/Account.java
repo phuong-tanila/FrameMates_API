@@ -60,13 +60,13 @@ public class Account implements Serializable, UserDetails {
     @Column(name="Role")
     private String role;
 
-    @OneToOne(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Employee.class)
+    @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Employee.class)
     private Employee employee;
 
-    @OneToOne(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Customer.class)
+    @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Customer.class)
     private Customer customer;
 
-    @OneToOne(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Administrator.class)
+    @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Administrator.class)
     private Administrator administrator;
 
     @Override
