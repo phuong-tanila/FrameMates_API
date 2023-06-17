@@ -9,7 +9,7 @@ import java.util.List;
 public interface StudioService {
     long count();
 
-    Studio createStudio(Studio studio);
+    StudioModel createStudio(StudioModel studioModel);
 
     StudioModel getById(Integer id);
     StudioModel updateStatus(Integer id, Integer status);

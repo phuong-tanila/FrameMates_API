@@ -29,8 +29,8 @@ public class StudioServiceImpl implements StudioService {
 	}
 
 	@Override
-	public Studio createStudio(Studio studio) {
-		return studioRepository.save(studio);
+	public StudioModel createStudio(StudioModel studioModel) {
+		return studioMapper.toModel(studioRepository.save(studioMapper.toEntity(studioModel)));
 	}
 
 	@Override
