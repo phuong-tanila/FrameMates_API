@@ -1,5 +1,6 @@
 package fu.training.FrameMates_API.servicepack;
 
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class ServicePackServiceImpl implements ServicePackService {
@@ -19,6 +22,16 @@ public class ServicePackServiceImpl implements ServicePackService {
 	@Override
 	public List<ServicePack> getAll() {
 		return servicePackRepository.findAll();
+	}
+
+	@Override
+	public ServicePackModel getById(int serviceId) throws RecordNotFoundException {
+		return mapper.toModel(getServiceById(serviceId));
+	}
+	private ServicePack getServiceById(int serviceId) throws RecordNotFoundException {
+		Optional<ServicePack> optService = servicePackRepository.findById(serviceId);
+		if(optService.isEmpty()) throw new RecordNotFoundException("Service id not found!");
+		return optService.get();
 	}
 
 	@Override
@@ -35,9 +48,19 @@ public class ServicePackServiceImpl implements ServicePackService {
 	}
 
 	@Override
-	public ServicePackModel updateService(ServicePackModel servicePackModel) {
-		ServicePack service = mapper.toEntity(servicePackModel);
+	public ServicePackModel updateService(ServicePackModel servicePackModel) throws RecordNotFoundException {
+		// find in db
+		ServicePack service = getServiceById(servicePackModel.getServiceId());
+		// change model to entity
+		service = mapper.toEntity(servicePackModel);
+		// update in db
 		service = servicePackRepository.save(service);
+		// return model
 		return mapper.toModel(service);
+	}
+
+	@Override
+	public void deleteService(Integer serviceId) throws RecordNotFoundException {
+//		servicePackRepository.delete(getServiceById(serviceId));
 	}
 }
