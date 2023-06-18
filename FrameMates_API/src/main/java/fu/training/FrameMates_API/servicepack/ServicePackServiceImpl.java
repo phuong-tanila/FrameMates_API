@@ -62,5 +62,6 @@ public class ServicePackServiceImpl implements ServicePackService {
 	@Override
 	public void deleteService(Integer serviceId) throws RecordNotFoundException {
 //		servicePackRepository.delete(getServiceById(serviceId));
+		log.error("Not implemented");
 	}
 }
