@@ -7,5 +7,6 @@ import java.util.List;
 public interface ServicePackService {
     List<ServicePack> getAll();
 
-    ServicePack save(ServicePack servicePack);
+    ServicePackModel createService(ServicePackModel servicePackModel);
+    ServicePackModel updateService(ServicePackModel servicePackModel);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
 @RestController
@@ -35,58 +36,30 @@ public class ServicePackController {
 		return new ResponseEntity<List<ServicePack>>(servicePackService.getAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/a")
-	public ResponseEntity<String> test(){
-		return new ResponseEntity<String>("123", HttpStatus.OK);
-	}
-
 	@PostMapping("")
 	public ResponseEntity<?> createService(
 			@Valid @RequestBody ServicePackModel model,
 			Authentication authentication
-	){
-//		holder.
+	) throws InvalidPropertiesFormatException {
 		Account currentAccount =(Account) authentication.getPrincipal();
-		log.error(model.toString());
-		ServicePack service = servicePackMapper.toEntity(model);
-//		service.setCreateBy(currentAccount.getAccount_Employee().);
-		service.setCreateDate(new Timestamp(new Date().getTime()));
-		service.setRating(Double.valueOf(0));
-
-		log.error(service.toString());
-		if(service.getServiceId() != 0) {
-			ExceptionResponse exceptionResponse = new ExceptionResponse(
-					"Invalid field",
-					"Service id can not be specified!"
-			);
-			return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+		model.setCreateBy(currentAccount.getEmployee());
+		if(model.getServiceId() != 0) {
+			throw new InvalidPropertiesFormatException("Service id can not be specified!");
 		}
-		service = servicePackService.save(service);
-		return new ResponseEntity<ServicePackModel>(servicePackMapper.toModel(service), HttpStatus.CREATED);
+		ServicePackModel serviceModel = servicePackService.createService(model);
+		return new ResponseEntity<ServicePackModel>(serviceModel, HttpStatus.CREATED);
 	}
 
 	@PatchMapping("/{serviceId}")
-	public ResponseEntity<?> updateService(@Valid @RequestBody ServicePackModel model, @PathVariable Integer serviceId){
-
-		if(model == null){
-			ExceptionResponse exceptionResponse = new ExceptionResponse(
-					"Required field unspecified",
-					"Service id must be specified!"
-			);
-			return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
-
-		}
-
-		ServicePack service = servicePackMapper.toEntity(model);
+	public ResponseEntity<?> updateService(
+			@Valid @RequestBody ServicePackModel model
+			, @PathVariable Integer serviceId
+	) throws InvalidPropertiesFormatException {
 		if(serviceId == null) {
-			ExceptionResponse exceptionResponse = new ExceptionResponse(
-					"Required field unspecified",
-					"Service id must be specified!"
-			);
-			return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+			throw new InvalidPropertiesFormatException("Service id must be specified!");
 		}
-		service.setServiceId(serviceId);
-		service = servicePackService.save(service);
-		return new ResponseEntity<ServicePackModel>(servicePackMapper.toModel(service), HttpStatus.CREATED);
+		model.setServiceId(serviceId);
+		ServicePackModel serviceModel = servicePackService.updateService(model);
+		return new ResponseEntity<ServicePackModel>(serviceModel, HttpStatus.CREATED);
 	}
 }
