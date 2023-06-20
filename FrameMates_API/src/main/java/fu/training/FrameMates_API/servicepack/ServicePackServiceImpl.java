@@ -3,6 +3,8 @@ package fu.training.FrameMates_API.servicepack;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -24,6 +26,16 @@ public class ServicePackServiceImpl implements ServicePackService {
 		return servicePackRepository.findAll();
 	}
 
+
+	@Override
+	public Page<ServicePack> getAll(Pageable pageable) {
+		return servicePackRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<ServicePack> getByName(String name, Pageable pageable){
+		return servicePackRepository.findByName(name, pageable);
+	}
 	@Override
 	public ServicePackModel getById(int serviceId) throws RecordNotFoundException {
 		return mapper.toModel(getServiceById(serviceId));

@@ -42,17 +42,17 @@ public class WebSecurityConfig  {
                         .anyRequest().permitAll()
                 ).authenticationProvider(authenticationProvider())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtService, accountService), UsernamePasswordAuthenticationFilter.class);
-            if(accountService.findAll().size() == 0 ){
-                Account account = new Account();
-                account.setUsername("thanh");
-                account.setPassword(passwordEncoder().encode("1509"));
-                account.setRole("CUS");
-                accountService.createAccount(account);
-                Administrator admin = new Administrator();
-                admin.setAccount(account);
-//                customerService.createCustomer(admin);
-                administratorService.createAdmin(admin);
-            }
+//            if(accountService.findAll().size() == 0 ){
+//                Account account = new Account();
+//                account.setUsername("thanh");
+//                account.setPassword(passwordEncoder().encode("1509"));
+//                account.setRole("CUS");
+//                accountService.createAccount(account);
+//                Administrator admin = new Administrator();
+//                admin.setAccount(account);
+////                customerService.createCustomer(admin);
+//                administratorService.createAdmin(admin);
+//            }
         return http.build();
     }
 

@@ -15,7 +15,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeModel findByAccountId(int accountId) throws RecordNotFoundException {
-		Employee result = employeeRepository.findByAccountId(accountId);
+		Employee result = employeeRepository.findByAccountAccountId(accountId);
 		if(result != null)
 			return mapper.toModel(result);
 		throw new RecordNotFoundException("Can not find employee by account id: " + accountId);

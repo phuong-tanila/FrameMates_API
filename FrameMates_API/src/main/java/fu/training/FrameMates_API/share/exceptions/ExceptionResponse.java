@@ -14,7 +14,6 @@ public class ExceptionResponse {
         this.exceptionType = exceptionType + " exception";
         this.messages = messages;
     }
-
     public String exceptionType;
     public String[] messages;
 }
