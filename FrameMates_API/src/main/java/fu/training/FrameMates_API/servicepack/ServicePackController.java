@@ -28,9 +28,9 @@ public class ServicePackController {
 	private ServicePackMapper servicePackMapper;
 	@GetMapping("")
 	public ResponseEntity getAll(
-			@RequestParam(name = "sort", defaultValue = "serviceId_asc") List<String> sortOrders,
+			@RequestParam(name = "sort", defaultValue = "") String[] sortOrders,
 			@RequestParam(name = "pageSize", defaultValue = "16") int pageSize,
-			@RequestParam(name = "pageNo", defaultValue = "1") int pageNo
+			@RequestParam(name = "pageNo", defaultValue = "0") int pageNo
 
 	){
 		Pageable pageable = PaginationHelper.getPageable(pageNo, pageSize, sortOrders);
@@ -40,6 +40,7 @@ public class ServicePackController {
 			if(page.isEmpty()) {
 
 			}
+			page.getContent().forEach(System.out::println);
 		}catch (Exception ex){
 			ex.printStackTrace();
 		}
