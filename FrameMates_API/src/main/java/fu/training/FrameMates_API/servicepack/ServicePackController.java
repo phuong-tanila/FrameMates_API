@@ -1,14 +1,10 @@
 package fu.training.FrameMates_API.servicepack;
 
 import fu.training.FrameMates_API.account.Account;
-<<<<<<< HEAD
 import fu.training.FrameMates_API.share.exceptions.ExceptionResponse;
-=======
->>>>>>> c45423dba2a38372a03d4f93c14e9dc87377a444
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.PaginationHelper;
 import jakarta.validation.Valid;
-<<<<<<< HEAD
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-=======
->>>>>>> c45423dba2a38372a03d4f93c14e9dc87377a444
 
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
