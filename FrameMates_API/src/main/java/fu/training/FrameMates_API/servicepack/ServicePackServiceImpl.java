@@ -34,7 +34,9 @@ public class ServicePackServiceImpl implements ServicePackService {
 
 	@Override
 	public Page<ServicePack> getByName(String name, Pageable pageable){
-		return servicePackRepository.findByName(name, pageable);
+		var page = servicePackRepository.findByNameContaining(name, pageable);
+		System.out.println(page);
+		return servicePackRepository.findByNameContaining(name, pageable);
 	}
 	@Override
 	public ServicePackModel getById(int serviceId) throws RecordNotFoundException {

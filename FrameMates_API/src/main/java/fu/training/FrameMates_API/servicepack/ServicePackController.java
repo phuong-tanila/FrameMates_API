@@ -26,30 +26,29 @@ public class ServicePackController {
     @Autowired
     private ServicePackService servicePackService;
 
-    @Autowired
-    private ServicePackMapper servicePackMapper;
+	@Autowired
+	private ServicePackMapper servicePackMapper;
+	@GetMapping("")
+	public ResponseEntity getAll(
+			@RequestParam(name = "sort", defaultValue = "") String[] sortOrders,
+			@RequestParam(name = "pageSize", defaultValue = "16") int pageSize,
+			@RequestParam(name = "pageNo", defaultValue = "0") int pageNo
+    ){
+		List<ServicePackModel> result = servicePackMapper.toModels(servicePackService.getAll());
+		return new ResponseEntity<List<ServicePackModel>>(result, HttpStatus.OK);
+	}
 
-    @GetMapping("")
-    public ResponseEntity<List<ServicePack>> getAll(
-            @RequestParam(defaultValue = "16") int pageNum
-            , @RequestParam(defaultValue = "1") int pageNo
-            , @RequestParam(defaultValue = "") String[] sort
-    ) {
-//        Pageable pageable = PageableHelper
-        return new ResponseEntity<List<ServicePack>>(servicePackService.getAll(), HttpStatus.OK);
-    }
-
-
-    @GetMapping("")
+    @GetMapping("name")
     public ResponseEntity<List<ServicePack>> getByName(
             @RequestParam(defaultValue = "16") int pageSize
-            , @RequestParam(defaultValue = "1") int pageNo
+            , @RequestParam(defaultValue = "0") int pageNo
             , @RequestParam(defaultValue = "") String[] sort
             , @RequestParam() String name
     ) {
 
         Pageable pageable = PaginationHelper.getPageable(pageNo, pageSize, sort);
-        return new ResponseEntity<Page<ServicePack>>(servicePackService.getByName(name), HttpStatus.OK);
+        Page page = servicePackService.getByName(name, pageable);
+        return new ResponseEntity<List<ServicePack>>(page.getContent(), HttpStatus.OK);
     }
 
     @PostMapping("")

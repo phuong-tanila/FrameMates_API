@@ -23,8 +23,11 @@ public class PaginationHelper {
         }
         return ordersList;
     }
-
-    public static Pageable getPageable(int pageNo, int pageSize, List<String> orders){
-        return PageRequest.of(pageNo, pageSize, Sort.by(getSortOrders(orders)));
+    public static List<String> convertArrayToListFromRequest(String... orders){
+        return Arrays.stream(orders).filter(Predicate.not(String::isEmpty)).toList();
+    }
+    public static Pageable getPageable(int pageNo, int pageSize, String... orders){
+        List<String> dynamicListOrder = convertArrayToListFromRequest(orders);
+        return PageRequest.of(pageNo, pageSize, Sort.by(getSortOrders(dynamicListOrder)));
     }
 }

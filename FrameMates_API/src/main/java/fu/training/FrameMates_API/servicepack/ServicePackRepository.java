@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ServicePackRepository extends JpaRepository<ServicePack, Integer> {
 
-    Page<ServicePack> findByName(String name, Pageable pageable);
+    Page<ServicePack> findByNameContaining(String name, Pageable pageable);
 }
