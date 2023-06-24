@@ -18,4 +18,9 @@ public class VoucherController {
 		VoucherModel voucherModel = voucherService.create(voucher);
 		return voucherModel!= null ? ResponseEntity.ok(voucherModel) : ResponseEntity.unprocessableEntity().build();
 	}
+	@DeleteMapping("{id}")
+	public ResponseEntity delete(@PathVariable Integer id) {
+		VoucherModel voucherModel = voucherService.delete(id);
+		return voucherModel!= null ? ResponseEntity.ok("Voucher was successfully deleted") : ResponseEntity.unprocessableEntity().build();
+	}
 }
