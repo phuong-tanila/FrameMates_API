@@ -39,20 +39,27 @@ public class StudioServiceImpl implements StudioService {
 	}
 
 	@Override
-	public StudioModel updateStatus(Integer id, Integer status) {
-		Studio studio = getStudio(id);
-		if (studio == null) {
-			return null;
-		}
-		studio.setStatus(status);
-		return studioMapper.toModel(studio);
-	}
-
-	@Override
 	public List<StudioModel> getByName(String name) {
 		List<StudioModel> studioModels = new ArrayList<>();
 		List<Studio> studios = studioRepository.findAllByNameContains(name);
 		studios.forEach(studio -> studioModels.add(studioMapper.toModel(studio)));
 		return studioModels;
+	}
+
+	@Override
+	public StudioModel update(Integer id, StudioModel studioModel) {
+		Studio studio = getStudio(id);
+		if (studio == null) {
+			return null;
+		}
+		studio.setName(studioModel.getName());
+		studio.setAddress(studioModel.getAddress());
+		studio.setDescription(studioModel.getDescription());
+		studio.setStatus(studioModel.getStatus());
+		studio.setTotalRating(studioModel.getTotalRating());
+		studio.setBalance(studio.getBalance());
+		studio.setAvatarStudio(studioModel.getAvatarStudio());
+		studio.setCoverImage(studioModel.getCoverImage());
+		return studioMapper.toModel(studioRepository.save(studio));
 	}
 }
