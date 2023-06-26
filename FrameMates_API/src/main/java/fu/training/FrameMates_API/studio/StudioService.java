@@ -1,9 +1,17 @@
 package fu.training.FrameMates_API.studio;
 
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.studio.Studio;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface StudioService {
     long count();
 
-    Studio createStudio(Studio studio);
+    StudioModel createStudio(StudioModel studioModel);
+
+    StudioModel getById(Integer id);
+    List<StudioModel> getByName(String name);
+    StudioModel update(Integer id, StudioModel studioModel);
 }
