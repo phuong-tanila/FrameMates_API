@@ -1,17 +1,15 @@
 package fu.training.FrameMates_API.servicepack;
 
-import fu.training.FrameMates_API.employee.Employee;
-import fu.training.FrameMates_API.favorite.Favorite;
-import fu.training.FrameMates_API.mediaservice.MediaService;
-import fu.training.FrameMates_API.orderdetail.OrderDetail;
-import fu.training.FrameMates_API.studio.Studio;
-import jakarta.persistence.*;
+import fu.training.FrameMates_API.employee.EmployeeModel;
+import fu.training.FrameMates_API.mediaservice.MediaServiceModel;
+import fu.training.FrameMates_API.studio.StudioModel;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Data
@@ -20,20 +18,23 @@ public class ServicePackModel {
 
     private int serviceId;
     @NotBlank(message = "service name is not specified")
+
     private String name;
 
-    private java.sql.Timestamp createDate;
+    private Timestamp createDate;
+
     @NotNull(message = "service price is not specified")
     @Min(0)
     private Integer price;
+
     @NotBlank(message = "service description is not specified")
     private String description;
 
     private Integer soldCount = 0;
 
-    private Integer status;
+    private String status;
 
-    private java.sql.Timestamp updateDate;
+    private Timestamp updateDate;
 
     private Integer view;
 
@@ -41,15 +42,17 @@ public class ServicePackModel {
 
     private Double rating;
 
-    private Employee updateBy;
+    private EmployeeModel updateBy;
 
-    private Employee createBy;
+    private EmployeeModel createBy;
 
-    private Studio studio;
+    private StudioModel studio;
 
-    private Set<MediaService> servicePack_mediaService;
+    private Set<MediaServiceModel> servicePack_mediaService;
 
-    private Set<OrderDetail> servicePack_orderDetail;
 
-    private Set<Favorite> servicePack_favorite;
+//
+//    private Set<OrderDetailModel> servicePack_orderDetail;
+//
+//    private Set<FavoriteModel> servicePack_favorite;
 }

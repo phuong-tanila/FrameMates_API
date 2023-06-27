@@ -5,10 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.account.AccountService;
 import fu.training.FrameMates_API.administrator.Administrator;
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.studio.Studio;
 import fu.training.FrameMates_API.administrator.AdministratorService;
 import fu.training.FrameMates_API.customer.CustomerService;
 import fu.training.FrameMates_API.studio.StudioService;
+import fu.training.FrameMates_API.tag.Tag;
+import fu.training.FrameMates_API.tag.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -18,7 +21,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @Slf4j
@@ -29,6 +35,8 @@ public class DbInitializer {
     private final AccountService accountService;
     private final AdministratorService administratorService;
     private final PasswordEncoder passwordEncoder;
+
+    private final TagService tagService;
     private final CustomerService customerService;
 
     @Autowired
@@ -38,7 +46,8 @@ public class DbInitializer {
             AdministratorService administratorService,
             AccountService accountService,
             CustomerService customerService,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            TagService tagService
     ) {
         this.resourceLoader = resourceLoader;
         this.studioService = studioService;
@@ -46,6 +55,7 @@ public class DbInitializer {
         this.accountService = accountService;
         this.customerService = customerService;
         this.passwordEncoder = passwordEncoder;
+        this.tagService = tagService;
     }
 
     public void init() throws IOException {
@@ -67,10 +77,41 @@ public class DbInitializer {
             studios.forEach(s -> {
                 s.setAdmin(admin);
                 s.setAddress("Hồ Chí Minh");
+                s.getStudio_servicePack().forEach(service -> {
+                    service.setCreateDate(new Timestamp(System.currentTimeMillis()));
+                    service.setStudio(s);
+                    service.setSoldCount(0);
+                    service.setDiscount(0);
+                    service.setView(0);
+//                    service.set
+                });
                 studioService.createStudio(s);
             });
         }
 //        objectMapper.
+    }
+    private void initTagIfNotExist(){
+        if(tagService.countTag() == 0) {
+            List<Tag> tags = new ArrayList<>();
+            tags.add(new Tag("travel"));
+            tags.add(new Tag("portrait"));
+            tags.add(new Tag("animals"));
+            tags.add(new Tag("nature"));
+            tags.add(new Tag("art"));
+            tags.add(new Tag("landscape"));
+            tags.add(new Tag("fashion"));
+            tagService.createTags(tags);
+        }
+    }
+    private List<Tag> generateRandomTags(int number) throws RecordNotFoundException {
+        initTagIfNotExist();
+        int maxTagId = (int) tagService.countTag();
+        List<Tag> result = new ArrayList<>();
+        for (int i = 0; i < number; i++) {
+            int randomNum = ThreadLocalRandom.current().nextInt(0, maxTagId);
+            result.add(tagService.getById(randomNum));
+        }
+        return result;
     }
     private byte[] readDataFromJsonFile(String fileName) throws IOException{
         Resource resource = resourceLoader.getResource("classpath:" + fileName);

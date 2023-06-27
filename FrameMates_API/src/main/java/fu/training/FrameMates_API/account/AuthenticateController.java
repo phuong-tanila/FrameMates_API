@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthenticateController {
     @Autowired
     private AccountService accountService;
@@ -32,8 +32,7 @@ public class AuthenticateController {
                             request.getPassword()
                     )
             );
-            log.error(authentication.toString());
-            log.error(request.toString());
+            
 //			SecurityContextHolder.getContext().setAuthentication(authentication);
             String accessToken = jwtService.generateToken(TokenTypeEnum.ACCESSTOKEN, (Account) authentication.getPrincipal());
             String refreshToken = jwtService.generateToken(TokenTypeEnum.REFRESHTOKEN, (Account) authentication.getPrincipal());
