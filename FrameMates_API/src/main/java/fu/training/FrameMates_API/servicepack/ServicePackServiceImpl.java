@@ -2,7 +2,6 @@ package fu.training.FrameMates_API.servicepack;
 
 import fu.training.FrameMates_API.employee.Employee;
 import fu.training.FrameMates_API.employee.EmployeeMapper;
-import fu.training.FrameMates_API.employee.EmployeeModel;
 import fu.training.FrameMates_API.employee.EmployeeService;
 import fu.training.FrameMates_API.mediaservice.MediaServiceMapper;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
@@ -72,7 +71,8 @@ public class ServicePackServiceImpl implements ServicePackService {
 	public ServicePackModel getById(int serviceId) throws RecordNotFoundException {
 		return servicePackMapper.toModel(getServiceById(serviceId));
 	}
-	private ServicePack getServiceById(int serviceId) throws RecordNotFoundException {
+	@Override
+	public ServicePack getServiceById(int serviceId) throws RecordNotFoundException {
 		Optional<ServicePack> optService = servicePackRepository.findById(serviceId);
 		if(optService.isEmpty()) throw new RecordNotFoundException("Service id not found!");
 		return optService.get();

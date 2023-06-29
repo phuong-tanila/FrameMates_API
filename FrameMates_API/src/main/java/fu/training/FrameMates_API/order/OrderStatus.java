@@ -1,8 +1,9 @@
 package fu.training.FrameMates_API.order;
 
 public enum OrderStatus {
-    CREATED,
+    PENDING,
     DEPOSITED,
-    PAID,
+    WORKED,
+    COMPLETED,
     CANCELED
 }

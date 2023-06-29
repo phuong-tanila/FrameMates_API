@@ -2,9 +2,12 @@ package fu.training.FrameMates_API.customer;
 
 import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.account.AccountMapper;
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -35,6 +38,13 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerRepository.findByAccount_EmailOrAccount_Phone(emailOrPhone, emailOrPhone)
 				.orElse(null);
 		return customer == null ? null : customerMapper.toModel(customer);
+	}
+
+	@Override
+	public Customer getCustomerById(int customerId) throws RecordNotFoundException {
+		Optional<Customer> result = customerRepository.findById(customerId);
+		if(result.isEmpty()) throw new RecordNotFoundException("Can't find customer by id: " + customerId);
+		return result.get();
 	}
 
 	@Override

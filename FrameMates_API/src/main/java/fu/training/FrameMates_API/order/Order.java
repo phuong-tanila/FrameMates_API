@@ -61,7 +61,7 @@ public class Order implements Serializable {
 	@JoinColumn(name="PaymentId", referencedColumnName="PaymentId")
 	private Payment payment;
 
-	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= OrderDetail.class)
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity= OrderDetail.class)
 	private Set<OrderDetail> order_OrderDetail;
 	
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= VoucherDetail.class)
