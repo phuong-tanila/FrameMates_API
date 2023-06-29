@@ -36,7 +36,7 @@ public class ApiExceptionHandler {
     ){
         List<String> messages = ex.getBindingResult().getFieldErrors()
                 .stream()
-                .map(x -> x.getDefaultMessage())
+                .map(x -> x.getField() + ": " + x.getDefaultMessage())
                 .collect(Collectors.toList());
 
         return new ResponseEntity<ExceptionResponse>(
@@ -47,6 +47,21 @@ public class ApiExceptionHandler {
                 HttpStatus.BAD_REQUEST
         );
     }
+
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ExceptionResponse> handleException(
+//            Exception ex, WebRequest request
+//    ){
+//
+//        return new ResponseEntity<ExceptionResponse>(
+//                new ExceptionResponse(
+//                        "Exception",
+//                    ex.getMessage()
+//                ),
+//                HttpStatus.BAD_REQUEST
+//        );
+//    }
+
 
     @ExceptionHandler(HttpClientErrorException.MethodNotAllowed.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

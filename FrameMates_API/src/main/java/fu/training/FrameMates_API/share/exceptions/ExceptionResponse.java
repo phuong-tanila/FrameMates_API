@@ -10,7 +10,6 @@ import lombok.ToString;
 @ToString
 //@AllArgsConstructor
 public class ExceptionResponse {
-
     public ExceptionResponse(String exceptionType, String... messages) {
         this.exceptionType = exceptionType + " exception";
         this.messages = messages;

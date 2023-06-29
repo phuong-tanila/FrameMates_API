@@ -10,7 +10,6 @@ public interface StudioService {
     long count();
 
     StudioModel createStudio(StudioModel studioModel);
-
     StudioModel getById(Integer id);
     List<StudioModel> getByName(String name);
     StudioModel update(Integer id, StudioModel studioModel);
