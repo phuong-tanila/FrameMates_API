@@ -49,7 +49,7 @@ public class Customer implements Serializable {
 	private String address;
 	
 	@ManyToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
-	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=false)
+	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=true)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Administrator admin;
