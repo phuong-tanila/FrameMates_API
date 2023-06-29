@@ -12,7 +12,7 @@ import lombok.*;
 
 import java.util.Set;
 
-@Data
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,13 +21,8 @@ public class EmployeeModel {
 
     private Integer employeeId;
 
-    private StudioModel studioModel;
-
     private Integer status;
 
-    private AccountModel accountModel;
-
-    private StudioModel ownerModel;
 
 //    @OneToOne(mappedBy = "subAdminStudio")
 //    private Studio subAdminStudio;

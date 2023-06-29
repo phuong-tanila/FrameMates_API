@@ -51,7 +51,13 @@ public class Voucher implements Serializable {
 	
 	@Column(name="AvailableQuantity")
 	private Integer availableQuantity;
-	
+
+	@Column(name="Title")
+	private String title;
+
+	@Column(name="Status")
+	private Integer status;
+
 	@ManyToOne(targetEntity=Studio.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="StudioId", referencedColumnName="StudioId")
 	private Studio studio;

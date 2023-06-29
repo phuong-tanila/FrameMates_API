@@ -60,34 +60,34 @@ public class DbInitializer {
 
     public void init() throws IOException {
         log.error(Long.toString(studioService.count()));
-        if(studioService.count() == 0) {
-            var jsonData = readDataFromJsonFile("data.json");
-            ObjectMapper objectMapper = new ObjectMapper();
-            List<Studio> studios = objectMapper.readValue(jsonData,  new TypeReference<List<Studio>>(){});
-            Administrator admin = new Administrator();
-            Account account = new Account();
-            account.setEmail("thanh@gmail.com");
-            account.setPhone("03231354558");
-            account.setUsername("thanh");
-            account.setPassword(passwordEncoder.encode("1509"));
-            account.setFullName("Thành");
-            accountService.createAccount(account);
-            admin.setAccount(account);
-            administratorService.createAdmin(admin);
-            studios.forEach(s -> {
-                s.setAdmin(admin);
-                s.setAddress("Hồ Chí Minh");
-                s.getStudio_servicePack().forEach(service -> {
-                    service.setCreateDate(new Timestamp(System.currentTimeMillis()));
-                    service.setStudio(s);
-                    service.setSoldCount(0);
-                    service.setDiscount(0);
-                    service.setView(0);
-//                    service.set
-                });
-                studioService.createStudio(s);
-            });
-        }
+//        if(studioService.count() == 0) {
+//            var jsonData = readDataFromJsonFile("data.json");
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            List<Studio> studios = objectMapper.readValue(jsonData,  new TypeReference<List<Studio>>(){});
+//            Administrator admin = new Administrator();
+//            Account account = new Account();
+//            account.setEmail("thanh@gmail.com");
+//            account.setPhone("03231354558");
+//            account.setUsername("thanh");
+//            account.setPassword(passwordEncoder.encode("1509"));
+//            account.setFullName("Thành");
+//            accountService.createAccount(account);
+//            admin.setAccount(account);
+//            administratorService.createAdmin(admin);
+//            studios.forEach(s -> {
+//                s.setAdmin(admin);
+//                s.setAddress("Hồ Chí Minh");
+//                s.getStudio_servicePack().forEach(service -> {
+//                    service.setCreateDate(new Timestamp(System.currentTimeMillis()));
+//                    service.setStudio(s);
+//                    service.setSoldCount(0);
+//                    service.setDiscount(0);
+//                    service.setView(0);
+////                    service.set
+//                });
+//                studioService.createStudio(s);
+//            });
+//        }
 //        objectMapper.
     }
     private void initTagIfNotExist(){

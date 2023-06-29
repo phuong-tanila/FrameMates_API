@@ -2,7 +2,9 @@ package fu.training.FrameMates_API.servicepack;
 
 import fu.training.FrameMates_API.employee.Employee;
 import fu.training.FrameMates_API.employee.EmployeeMapper;
+import fu.training.FrameMates_API.employee.EmployeeModel;
 import fu.training.FrameMates_API.employee.EmployeeService;
+import fu.training.FrameMates_API.mediaservice.MediaServiceMapper;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.EnumConverter;
 import fu.training.FrameMates_API.studio.StudioService;
@@ -26,14 +28,21 @@ public class ServicePackServiceImpl implements ServicePackService {
 	@Autowired
 	private ServicePackMapper servicePackMapper;
 	@Autowired
-	private ServicePackRepository servicePackRepository;
-	@Autowired
-	private StudioService studioService;
+	private MediaServiceMapper mediaServiceMapper;
 	@Autowired
 	private EmployeeMapper employeeMapper;
 
+
+	@Autowired
+	private ServicePackRepository servicePackRepository;
+
+
+	@Autowired
+	private StudioService studioService;
 	@Autowired
 	private EmployeeService employeeService;
+
+
 
 //	@Autowired
 //	private
@@ -70,18 +79,20 @@ public class ServicePackServiceImpl implements ServicePackService {
 	}
 
 	@Override
-	public ServicePackModel createService(ServicePackModel servicePackModel){
+	public ServicePackModel createService(ServicePackModel servicePackModel) throws RecordNotFoundException {
 		log.error(servicePackModel.toString());
 		servicePackModel.setCreateDate(new Timestamp(new Date().getTime()));
 		servicePackModel.setRating(Double.valueOf(0));
 		servicePackModel.setView(0);
 		servicePackModel.setDiscount(0);
-		servicePackModel.setStudio(servicePackModel.getCreateBy().getStudioModel());
+		int employeeId = servicePackModel.getCreateBy().getEmployeeId();
 		log.error(ServiceStatus.CREATED.toString());
 		String serviceStatus = EnumConverter.convertEnumValueToString(ServiceStatus.CREATED.ordinal(), ServiceStatus.class);
 //		servicePackModel.setStatus(serviceStatus);
 		log.error(serviceStatus);
 		ServicePack service = servicePackMapper.toEntity(servicePackModel);
+		Employee employee = employeeService.findByEmployeeId(employeeId);
+		service.setStudio(employee.getStudio());
 		service.setStatus(ServiceStatus.CREATED.ordinal());
 		service = servicePackRepository.save(service);
 		return servicePackMapper.toModel(service);
@@ -90,30 +101,44 @@ public class ServicePackServiceImpl implements ServicePackService {
 	@Override
 	public ServicePackModel updateService(ServicePackModel servicePackModel, Employee employee) throws RecordNotFoundException {
 		// find in db
-		Set<ServicePack> serviceList = employee.getStudio().getStudio_servicePack();
+		Set<ServicePack> serviceList = findByServicesByStudioId(employee.getStudio().getStudioId());
 		for (ServicePack servicePack: serviceList) {
-			ServicePack service = getServiceById(servicePackModel.getServiceId());
-			// change model to entity
-			service = servicePackMapper.toEntity(servicePackModel);
-			// update in db
-			service.setUpdateBy(employeeMapper.toEntity(servicePackModel.getUpdateBy()));
-			service.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-			service = servicePackRepository.save(service);
-			// return model
-			return servicePackMapper.toModel(service);
+			if(servicePack.getServiceId() == servicePackModel.getServiceId()){
+				servicePack.setName(servicePackModel.getName());
+				servicePack.setDiscount(servicePackModel.getDiscount());
+				servicePack.setDescription(servicePackModel.getDescription());
+				servicePack.setPrice(servicePackModel.getPrice());
+				servicePack.setSoldCount(servicePackModel.getSoldCount());
+				servicePack.setView(servicePackModel.getView());
+				servicePack.setServicePack_mediaService(mediaServiceMapper.toEntities(servicePackModel.getServicePack_mediaService()));
+				// update in db
+				servicePack.setUpdateBy(employeeMapper.toEntity(servicePackModel.getUpdateBy()));
+				servicePack.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+				servicePack = servicePackRepository.save(servicePack);
+				// return model
+				return servicePackMapper.toModel(servicePack);
+			}
 		}
 		throw new RecordNotFoundException("Your studio don't have a service that have id: " + servicePackModel.getServiceId());
 
 	}
 
 	@Override
+	public Set<ServicePack> findByServicesByStudioId(long studioId) {
+		return servicePackRepository.findByStudioStudioId(studioId);
+	}
+
+	@Override
 	public void deleteService(Integer serviceId, Employee employee) throws RecordNotFoundException {
-//		servicePackRepository.delete(getServiceById(serviceId));
-		ServicePack deletingService = getServiceById(serviceId);
-		if(!employee.getStudio().getStudio_servicePack().contains(deletingService))
-			throw new RecordNotFoundException("Your studio don't have a service that have id: " + serviceId);
-		deletingService.setUpdateBy(employee);
-		deletingService.setStatus(ServiceStatus.DELETED.ordinal());
-		servicePackRepository.save(deletingService);
+
+		Set<ServicePack> serviceList = findByServicesByStudioId(employee.getStudio().getStudioId());
+		for (ServicePack servicePack: serviceList) {
+			if (servicePack.getServiceId() != serviceId) {
+				throw new RecordNotFoundException("Your studio don't have a service that have id: " + serviceId);
+			}
+			servicePack.setUpdateBy(employee);
+			servicePack.setStatus(ServiceStatus.DELETED.ordinal());
+			servicePackRepository.save(servicePack);
+		}
 	}
 }

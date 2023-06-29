@@ -5,11 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1df1d713-673e-423f-a822-089711991982" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServiceStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/account/AccountMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/account/AccountMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/account/AccountModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/account/AccountModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/account/AuthenticateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/account/AuthenticateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/administrator/AdministratorModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/administrator/AdministratorModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/employee/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/employee/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/employee/EmployeeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/employee/EmployeeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/employee/EmployeeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/employee/EmployeeModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/mediaservice/MediaServiceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/mediaservice/MediaServiceModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/servicepack/ServicePackServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/share/exceptions/ApiExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/share/exceptions/ApiExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/share/helpers/DbInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/share/helpers/DbInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/studio/Studio.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/studio/Studio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/studio/StudioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/studio/StudioMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/studio/StudioModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/studio/StudioModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/tag/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/tag/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/tag/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/tag/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/tag/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrameMates_API/src/main/java/fu/training/FrameMates_API/tag/TagServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +53,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/code/aSWD/1-new/FrameMates_API",
-    "settings.editor.selected.configurable": "settings.sync"
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/code/aSWD/1-new/FrameMates_API/FrameMates_API",
+    "settings.editor.selected.configurable": "settings.sync",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -49,8 +76,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1687337486586</updated>
+      <workItem from="1687602603915" duration="158000" />
+      <workItem from="1687602769180" duration="21000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

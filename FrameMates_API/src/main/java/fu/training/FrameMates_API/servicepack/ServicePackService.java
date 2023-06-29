@@ -8,15 +8,16 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ServicePackService {
     List<ServicePackModel> getAll();
     Page<ServicePackModel> getAll(Pageable pageable);
     Page<ServicePackModel> getByName(String name, Pageable pageable);
     ServicePackModel getById(int serviceId) throws RecordNotFoundException;
-    ServicePackModel createService(ServicePackModel servicePackModel);
+    ServicePackModel createService(ServicePackModel servicePackModel) throws RecordNotFoundException;
     ServicePackModel updateService(ServicePackModel servicePackModel, Employee employee) throws RecordNotFoundException;
 //    void deleteService(Integer serviceId) throws RecordNotFoundException;
-
+    Set<ServicePack> findByServicesByStudioId(long studioId);
     void deleteService(Integer serviceId, Employee employee) throws RecordNotFoundException;
 }

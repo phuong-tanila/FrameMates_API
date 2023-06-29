@@ -9,10 +9,13 @@ import fu.training.FrameMates_API.employee.EmployeeModel;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter @Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode
 public class AccountModel {
+
     private Integer accountId;
     private String username;
     private String fullName;

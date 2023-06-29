@@ -10,8 +10,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface StudioMapper {
-
     Studio toEntity (StudioModel model);
-
     StudioModel toModel (Studio entity);
 }

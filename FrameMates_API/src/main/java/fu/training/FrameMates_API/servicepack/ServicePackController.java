@@ -66,7 +66,7 @@ public class ServicePackController {
     public ResponseEntity<?> createService(
             @Valid @RequestBody ServicePackModel model,
             Authentication authentication
-    ) throws InvalidPropertiesFormatException, NoSuchMethodException {
+    ) throws InvalidPropertiesFormatException, NoSuchMethodException, RecordNotFoundException {
         Account currentAccount = (Account) authentication.getPrincipal();
         AccountModel currentAccountModel = accountMapper.toModel(currentAccount);
         model.setCreateBy(currentAccountModel.getEmployee());
