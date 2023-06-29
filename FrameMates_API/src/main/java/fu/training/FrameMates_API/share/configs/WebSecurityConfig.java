@@ -38,7 +38,8 @@ public class WebSecurityConfig  {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/services").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/services/**").permitAll()
+                        .anyRequest().permitAll()
                 ).authenticationProvider(authenticationProvider())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtService, accountService), UsernamePasswordAuthenticationFilter.class);
 //            if(accountService.findAll().size() == 0 ){

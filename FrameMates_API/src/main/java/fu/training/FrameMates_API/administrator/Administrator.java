@@ -42,7 +42,7 @@ public class Administrator implements Serializable {
 
 	@JsonIgnore
 	@ToString.Exclude
-	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
+	@OneToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	private Account account;
 	

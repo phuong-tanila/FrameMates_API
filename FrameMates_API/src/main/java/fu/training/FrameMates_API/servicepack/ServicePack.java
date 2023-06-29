@@ -4,6 +4,7 @@ import fu.training.FrameMates_API.mediaservice.MediaService;
 import fu.training.FrameMates_API.favorite.Favorite;
 import fu.training.FrameMates_API.employee.Employee;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -83,4 +84,16 @@ public class ServicePack implements Serializable {
 
 	@OneToMany(mappedBy="servicePack", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity=Favorite.class)
 	private Set<Favorite> servicePack_favorite;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof ServicePack that)) return false;
+		return getServiceId() == that.getServiceId();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getServiceId());
+	}
 }

@@ -23,7 +23,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 @Entity
 @Transactional
 @JsonSerialize
@@ -51,7 +51,7 @@ public class Studio implements Serializable {
 	private Integer status;
 	
 	@Column(name="TotalRating")
-	private Integer totalRating;
+	private Double totalRating;
 
 	@Column(name="AvatarStudio", length = Integer.MAX_VALUE)
 	private String avatarStudio;
