@@ -41,7 +41,7 @@ public class Employee implements Serializable {
 	@JoinColumn(name="StudioId", referencedColumnName="StudioId")
 	private Studio studio;
 
-	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
+	@OneToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	private Account account;
 
