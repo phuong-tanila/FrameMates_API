@@ -19,7 +19,7 @@ public class  AccountServiceImpl implements AccountService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByUsernameOrPhone(username);
+        Account account = accountRepository.findByUsernameOrPhoneOrEmail(username);
         if(account == null) throw new UsernameNotFoundException("Username or phone not found: " + username);
         return account;
     }
