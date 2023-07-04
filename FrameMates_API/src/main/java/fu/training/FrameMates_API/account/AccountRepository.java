@@ -5,8 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Set;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
-    @Query("SELECT a FROM Account a WHERE a.username = :credetial OR a.phone = :credetial")
-    Account findByUsernameOrPhone(String credetial);
+    @Query("SELECT a FROM Account a WHERE a.username = :credential OR a.phone = :credential")
+    Account findByUsernameOrPhone(String credential);
+
+    @Query("SELECT a FROM Account a WHERE a.username = :username OR a.phone = :phone")
+    List<Account> findAllByUsernameOrPhone(String username, String phone);
+
 }

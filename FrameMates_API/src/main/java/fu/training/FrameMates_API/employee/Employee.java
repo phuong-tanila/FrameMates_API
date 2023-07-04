@@ -22,7 +22,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 @Entity
 @Transactional
 @JsonSerialize
@@ -41,7 +41,7 @@ public class Employee implements Serializable {
 	@JoinColumn(name="StudioId", referencedColumnName="StudioId")
 	private Studio studio;
 
-	@OneToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
+	@OneToOne(targetEntity=Account.class, fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	private Account account;
 

@@ -25,6 +25,11 @@ import lombok.ToString;
 public class Tag implements Serializable {
 
 	private static final long serialVersionUID = 6529685098267757690L;
+
+	public Tag(String title) {
+		this.title = title;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="TagId")

@@ -3,6 +3,8 @@ package fu.training.FrameMates_API.employee;
 
 import fu.training.FrameMates_API.customer.CustomerModel;
 import fu.training.FrameMates_API.employee.EmployeeService;
+import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,8 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	@PostMapping()
-	public ResponseEntity createEmployee(@RequestBody EmployeeModel employee) {
+	public ResponseEntity createEmployee(@RequestBody @Valid EmployeeModel employee) throws DupplicatedUserInfoException {
 		EmployeeModel employeeModel = employeeService.createEmployee(employee);
-		return employeeModel != null ? ResponseEntity.ok(employeeModel) : ResponseEntity.unprocessableEntity().build();
+		return ResponseEntity.ok(employeeModel);
 	}
 }
