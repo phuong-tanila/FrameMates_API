@@ -50,7 +50,7 @@ public class StudioServiceImpl implements StudioService {
 	public StudioModel update(Integer id, StudioModel studioModel) {
 		Studio studio = getStudio(id);
 		if (studio == null) {
-			return null;
+			throw new RecordNotFoundException("Studio not found!");
 		}
 		studio.setName(studioModel.getName());
 		studio.setAddress(studioModel.getAddress());

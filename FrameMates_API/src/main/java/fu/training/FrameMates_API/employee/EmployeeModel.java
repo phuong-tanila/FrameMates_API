@@ -8,6 +8,7 @@ import fu.training.FrameMates_API.payment.Payment;
 import fu.training.FrameMates_API.studio.Studio;
 import fu.training.FrameMates_API.studio.StudioModel;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.util.Set;
@@ -22,6 +23,8 @@ public class EmployeeModel {
     private Integer employeeId;
 
     private Integer status;
+    @Valid
+    private AccountModel accountModel;
 
 
 //    @OneToOne(mappedBy = "subAdminStudio")

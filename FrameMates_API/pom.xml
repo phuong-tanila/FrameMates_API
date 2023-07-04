@@ -84,9 +84,16 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
+<!--		twilio sms service-->
+		<!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>9.7.0</version>
+		</dependency>
 
 
-    </dependencies>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

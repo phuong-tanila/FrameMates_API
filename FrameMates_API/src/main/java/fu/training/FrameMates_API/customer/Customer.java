@@ -48,13 +48,13 @@ public class Customer implements Serializable {
 	@Column(name="Address", length=Integer.MAX_VALUE)
 	private String address;
 	
-	@ManyToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
+	@OneToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=false)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Administrator admin;
 
-	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity=Account.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

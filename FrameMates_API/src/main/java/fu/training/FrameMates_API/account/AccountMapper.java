@@ -20,5 +20,6 @@ public interface AccountMapper {
 //    @Mapping(source = "employee", target = "employee")
 //    @Mapping(source = "customer", target = "customer")
 //    @Mapping(source = "administrator", target = "administrator")
+    @Mapping(source = "password", target = "password", ignore = true)
     AccountModel toModel (Account entity);
 }

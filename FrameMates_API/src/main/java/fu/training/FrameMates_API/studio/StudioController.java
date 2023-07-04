@@ -33,6 +33,6 @@ public class StudioController {
 	@PutMapping("/{id}")
 	public ResponseEntity update(@PathVariable Integer id, @RequestBody StudioModel studio) {
 		StudioModel studioModel = studioService.update(id, studio);
-		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.UNPROCESSABLE_ENTITY) ;
+		return ResponseEntity.ok(studioModel);
 	}
 }

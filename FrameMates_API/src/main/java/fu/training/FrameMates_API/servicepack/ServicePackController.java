@@ -47,7 +47,11 @@ public class ServicePackController {
 		List<ServicePackModel> result = servicePackService.getAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-
+    @GetMapping("/{serviceId}")
+    public ResponseEntity getById(@PathVariable int serviceId) throws RecordNotFoundException {
+        var entity = servicePackService.getById(serviceId);
+        return new ResponseEntity(entity, HttpStatus.OK);
+    }
     @GetMapping("name")
     public ResponseEntity<List<ServicePack>> getByName(
             @RequestParam(defaultValue = "16") int pageSize
@@ -104,9 +108,5 @@ public class ServicePackController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity getById(@PathVariable int serviceId) throws RecordNotFoundException {
-        var entity = servicePackService.getById(serviceId);
-            return new ResponseEntity(entity, HttpStatus.OK);
-    }
 
 }

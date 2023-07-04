@@ -1,5 +1,6 @@
 package fu.training.FrameMates_API.share.exceptions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,20 @@ public class ApiExceptionHandler {
                 new ExceptionResponse(
                     "Record not found",
                         ex.getMessage()
+                ),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(DupplicatedUserInfoException.class)
+    public ResponseEntity<ExceptionResponse> handleDuppicatedUserInfoExceptionException(
+            DupplicatedUserInfoException ex, WebRequest request
+    ){
+//        List<String>  messages = new ObjectMapper().convertValue(ex.getMessage(), ArrayList.class);
+        return new ResponseEntity<ExceptionResponse>(
+                new ExceptionResponse(
+                        "Dupplicated user info exception",
+                        ex.getMessages()
                 ),
                 HttpStatus.NOT_FOUND
         );
