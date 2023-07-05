@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +51,13 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<CustomerModel> getCustomerByEmailOrPhone(String emailOrPhone) {
 		List<Customer> customer = customerRepository.findByAccount_EmailContainingOrAccount_PhoneContaining(emailOrPhone, emailOrPhone);
 		return customer == null ? null : customerMapper.toModels(customer);
+	}
+
+	@Override
+	public Customer getCustomerById(int customerId) throws RecordNotFoundException {
+		Optional<Customer> result = customerRepository.findById(customerId);
+		if(result.isEmpty()) throw new RecordNotFoundException("Can't find customer by id: " + customerId);
+		return result.get();
 	}
 
 	@Override

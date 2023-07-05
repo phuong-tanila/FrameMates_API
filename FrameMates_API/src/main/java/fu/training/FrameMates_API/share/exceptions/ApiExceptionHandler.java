@@ -78,7 +78,13 @@ public class ApiExceptionHandler {
 //        );
 //    }
 
-
+    @ExceptionHandler(InvalidStatusStringException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity handleInvalidEnumString(
+            InvalidStatusStringException ex
+    ){
+        return new ResponseEntity(new ExceptionResponse("Invalid staus", ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
     @ExceptionHandler(HttpClientErrorException.MethodNotAllowed.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String  handleMethodArgumentNotAllowed(

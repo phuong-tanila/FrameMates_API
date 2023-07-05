@@ -15,6 +15,9 @@ public interface ServicePackService {
     Page<ServicePackModel> getAll(Pageable pageable);
     Page<ServicePackModel> getByName(String name, Pageable pageable);
     ServicePackModel getById(int serviceId) throws RecordNotFoundException;
+
+    ServicePack getServiceById(int serviceId) throws RecordNotFoundException;
+
     ServicePackModel createService(ServicePackModel servicePackModel) throws RecordNotFoundException;
     ServicePackModel updateService(ServicePackModel servicePackModel, Employee employee) throws RecordNotFoundException;
 //    void deleteService(Integer serviceId) throws RecordNotFoundException;

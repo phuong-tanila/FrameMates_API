@@ -1,5 +1,7 @@
 package fu.training.FrameMates_API.customer;
 
+import fu.training.FrameMates_API.customer.Customer;
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
 
@@ -11,6 +13,7 @@ public interface CustomerService {
 
     List<CustomerModel> getCustomerByEmailOrPhone(String emailOrPhone);
 
+    Customer getCustomerById(int customerId) throws RecordNotFoundException;
     void banCustomer(Integer customerId);
 
     void unbanCustomer(Integer customerId);

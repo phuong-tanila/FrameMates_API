@@ -53,7 +53,7 @@ public class ServicePackController {
         return new ResponseEntity(entity, HttpStatus.OK);
     }
     @GetMapping("name")
-    public ResponseEntity<List<ServicePack>> getByName(
+    public ResponseEntity getByName(
             @RequestParam(defaultValue = "16") int pageSize
             , @RequestParam(defaultValue = "0") int pageNo
             , @RequestParam(defaultValue = "") String[] sort

@@ -48,8 +48,8 @@ public class Customer implements Serializable {
 	@Column(name="Address", length=Integer.MAX_VALUE)
 	private String address;
 	
-	@OneToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
-	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=false)
+	@ManyToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
+	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=true)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Administrator admin;
