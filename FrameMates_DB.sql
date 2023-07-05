@@ -2,7 +2,8 @@ USE [master]
 GO
 CREATE DATABASE [FrameMates_DB]
 EXEC [FrameMates_DB].[dbo].[sp_fulltext_database] @action = 'enable'
-
+GO
+USE [FrameMates_DB]
 GO
 ALTER DATABASE [FrameMates_DB] SET ANSI_NULL_DEFAULT OFF 
 GO
