@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 @Getter
 @Setter
@@ -27,6 +28,7 @@ import lombok.ToString;
 @Transactional
 @JsonSerialize
 @Table(name="ServicePack")
+@Where(clause="Status=1")
 public class ServicePack implements Serializable {
 	private static final long serialVersionUID = 6529685098267757690L;
 	@Id
