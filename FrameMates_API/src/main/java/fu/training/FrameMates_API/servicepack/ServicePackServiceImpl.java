@@ -6,11 +6,11 @@ import fu.training.FrameMates_API.employee.EmployeeService;
 import fu.training.FrameMates_API.mediaservice.MediaServiceMapper;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.EnumConverter;
+import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import fu.training.FrameMates_API.studio.StudioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -53,19 +53,29 @@ public class ServicePackServiceImpl implements ServicePackService {
 
 
 	@Override
-	public Page<ServicePackModel> getAll(Pageable pageable) {
+	public PaginationResponse<ServicePackModel> getAll(Pageable pageable) {
 
-		List<ServicePack> listSerivce =  servicePackRepository.findAll(pageable).getContent();
+		var serivcePackPage =  servicePackRepository.findAll(pageable);
 
-		return new PageImpl<>(servicePackMapper.toModels(listSerivce));
+		return getServicePackModelPaginationResponse(serivcePackPage);
 //		page.
 	}
 
+	private PaginationResponse<ServicePackModel> getServicePackModelPaginationResponse(Page<ServicePack> serivcePackPage) {
+		var result = new PaginationResponse<ServicePackModel>();
+		result.setItems(servicePackMapper.toModels(serivcePackPage.getContent()));
+		result.setPageNum(serivcePackPage.getNumber());
+		result.setPageSize(serivcePackPage.getSize());
+		result.setTotalPageNum(serivcePackPage.getTotalPages());
+		result.setTotalItems(serivcePackPage.getTotalElements());
+		return result;
+	}
+
 	@Override
-	public Page<ServicePackModel> getByName(String name, Pageable pageable){
-		var listSerivce = servicePackRepository.findByNameContaining(name, pageable).getContent();
+	public PaginationResponse<ServicePackModel> getByName(String name, Pageable pageable){
+		var serivcePackPage = servicePackRepository.findByNameContaining(name, pageable);
 //		System.out.println(page);
-		return new PageImpl<>(servicePackMapper.toModels(listSerivce));
+		return getServicePackModelPaginationResponse(serivcePackPage);
 	}
 	@Override
 	public ServicePackModel getById(int serviceId) throws RecordNotFoundException {
@@ -80,18 +90,18 @@ public class ServicePackServiceImpl implements ServicePackService {
 
 	@Override
 	public ServicePackModel createService(ServicePackModel servicePackModel){
-		log.error(servicePackModel.toString());
+		int employeeId = servicePackModel.getCreateBy().getEmployeeId();
+		Employee employee = employeeService.findByEmployeeId(employeeId);
+		if(employee.getStudio() == null) throw new RecordNotFoundException("You must own or work for a studio to do perform this action");
 		servicePackModel.setCreateDate(new Timestamp(new Date().getTime()));
 		servicePackModel.setRating(Double.valueOf(0));
 		servicePackModel.setView(0);
 		servicePackModel.setDiscount(0);
-		int employeeId = servicePackModel.getCreateBy().getEmployeeId();
 		log.error(ServiceStatus.CREATED.toString());
 		String serviceStatus = EnumConverter.convertEnumValueToString(ServiceStatus.CREATED.ordinal(), ServiceStatus.class);
 //		servicePackModel.setStatus(serviceStatus);
 		log.error(serviceStatus);
 		ServicePack service = servicePackMapper.toEntity(servicePackModel);
-		Employee employee = employeeService.findByEmployeeId(employeeId);
 		service.setStudio(employee.getStudio());
 		service.setStatus(ServiceStatus.CREATED.ordinal());
 		service = servicePackRepository.save(service);
@@ -102,7 +112,7 @@ public class ServicePackServiceImpl implements ServicePackService {
 	public ServicePackModel updateService(ServicePackModel servicePackModel, Employee employee) throws RecordNotFoundException {
 		// find in db
 		Set<ServicePack> serviceList = findByServicesByStudioId(employee.getStudio().getStudioId());
-		for (ServicePack servicePack: serviceList) {
+		for (ServicePack servicePack : serviceList) {
 			if(servicePack.getServiceId() == servicePackModel.getServiceId()){
 				servicePack.setName(servicePackModel.getName());
 				servicePack.setDiscount(servicePackModel.getDiscount());
@@ -130,15 +140,17 @@ public class ServicePackServiceImpl implements ServicePackService {
 
 	@Override
 	public void deleteService(Integer serviceId, Employee employee) throws RecordNotFoundException {
-
+		log.debug(employee.toString());
+		if(employee.getStudio() == null) throw new RecordNotFoundException("You must own or work for a studio to do perform this action");
 		Set<ServicePack> serviceList = findByServicesByStudioId(employee.getStudio().getStudioId());
 		for (ServicePack servicePack: serviceList) {
-			if (servicePack.getServiceId() != serviceId) {
-				throw new RecordNotFoundException("Your studio don't have a service that have id: " + serviceId);
+			if (servicePack.getServiceId() == serviceId) {
+				servicePack.setUpdateBy(employee);
+				servicePack.setStatus(ServiceStatus.DELETED.ordinal());
+				servicePackRepository.save(servicePack);
+				return;
 			}
-			servicePack.setUpdateBy(employee);
-			servicePack.setStatus(ServiceStatus.DELETED.ordinal());
-			servicePackRepository.save(servicePack);
 		}
+		throw new RecordNotFoundException("Your studio don't have a service that have id: " + serviceId);
 	}
 }

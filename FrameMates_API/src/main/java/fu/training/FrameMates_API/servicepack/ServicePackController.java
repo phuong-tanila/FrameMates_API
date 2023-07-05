@@ -6,6 +6,7 @@ import fu.training.FrameMates_API.account.AccountModel;
 import fu.training.FrameMates_API.share.exceptions.ExceptionResponse;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.PaginationHelper;
+import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -48,12 +51,12 @@ public class ServicePackController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
     @GetMapping("/{serviceId}")
-    public ResponseEntity getById(@PathVariable int serviceId) throws RecordNotFoundException {
+    public ResponseEntity<ServicePackModel> getById(@PathVariable int serviceId) throws RecordNotFoundException {
         var entity = servicePackService.getById(serviceId);
-        return new ResponseEntity(entity, HttpStatus.OK);
+        return new ResponseEntity<>(entity, HttpStatus.OK);
     }
     @GetMapping("name")
-    public ResponseEntity getByName(
+    public ResponseEntity<PaginationResponse<ServicePackModel>> getByName(
             @RequestParam(defaultValue = "16") int pageSize
             , @RequestParam(defaultValue = "0") int pageNo
             , @RequestParam(defaultValue = "") String[] sort
@@ -61,16 +64,16 @@ public class ServicePackController {
     ) {
 
         Pageable pageable = PaginationHelper.getPageable(pageNo, pageSize, sort);
-        Page page = servicePackService.getByName(name, pageable);
-        return new ResponseEntity<List<ServicePack>>(page.getContent(), HttpStatus.OK);
+//        Page page =;
+        return new ResponseEntity<>(servicePackService.getByName(name, pageable), HttpStatus.OK);
     }
 
     @PostMapping("")
-//	@PostAuthorize()
+	@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     public ResponseEntity<?> createService(
             @Valid @RequestBody ServicePackModel model,
             Authentication authentication
-    ) throws InvalidPropertiesFormatException, NoSuchMethodException, RecordNotFoundException {
+    ) throws InvalidPropertiesFormatException, RecordNotFoundException {
         Account currentAccount = (Account) authentication.getPrincipal();
         AccountModel currentAccountModel = accountMapper.toModel(currentAccount);
         model.setCreateBy(currentAccountModel.getEmployee());
@@ -79,10 +82,11 @@ public class ServicePackController {
         }
         ServicePackModel serviceModel = servicePackService.createService(model);
 //        serviceModel.setStatus();
-        return new ResponseEntity<ServicePackModel>(serviceModel, HttpStatus.CREATED);
+        return new ResponseEntity<>(serviceModel, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{serviceId}")
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     public ResponseEntity<?> updateService(
             @Valid @RequestBody ServicePackModel model
             , @PathVariable Integer serviceId

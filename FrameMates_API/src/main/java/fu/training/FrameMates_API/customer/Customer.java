@@ -18,6 +18,7 @@ import fu.training.FrameMates_API.payment.Payment;
 import fu.training.FrameMates_API.reaction.Reaction;
 import fu.training.FrameMates_API.voucherwallet.VoucherWallet;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 @Getter
 @Setter
@@ -28,6 +29,7 @@ import lombok.*;
 @Transactional
 @JsonSerialize
 @Table(name="Customer")
+@Where(clause = "Status=1")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = 6529685098267757690L;
 	@Id
