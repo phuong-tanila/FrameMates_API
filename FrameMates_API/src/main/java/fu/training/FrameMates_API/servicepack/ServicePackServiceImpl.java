@@ -79,7 +79,7 @@ public class ServicePackServiceImpl implements ServicePackService {
 	}
 
 	@Override
-	public ServicePackModel createService(ServicePackModel servicePackModel) throws RecordNotFoundException {
+	public ServicePackModel createService(ServicePackModel servicePackModel){
 		log.error(servicePackModel.toString());
 		servicePackModel.setCreateDate(new Timestamp(new Date().getTime()));
 		servicePackModel.setRating(Double.valueOf(0));

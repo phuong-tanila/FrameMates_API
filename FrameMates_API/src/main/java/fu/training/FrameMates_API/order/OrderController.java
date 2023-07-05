@@ -3,8 +3,10 @@ package fu.training.FrameMates_API.order;
 import fu.training.FrameMates_API.order.OrderService;
 import fu.training.FrameMates_API.share.exceptions.InvalidStatusStringException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
+import fu.training.FrameMates_API.share.helpers.PaginationHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,8 +31,15 @@ public class OrderController {
 	}
 
 	@GetMapping("/status")
-	public ResponseEntity getOrdersByStatus(@RequestParam String status) throws InvalidStatusStringException {
-		return new ResponseEntity(orderService.getOrdersBystatus(status), HttpStatus.OK);
+	public ResponseEntity getOrdersByStatus(
+			@RequestParam String status,
+			@RequestParam(defaultValue = "16") int pageSize
+			, @RequestParam(defaultValue = "0") int pageNo
+			, @RequestParam(defaultValue = "") String[] sort
+
+	) throws InvalidStatusStringException {
+		Pageable pageable = PaginationHelper.getPageable(pageNo, pageSize, sort);
+		return new ResponseEntity(orderService.getOrdersByStatus(status, pageable), HttpStatus.OK);
 	}
 	@PatchMapping("{id}")
 	public ResponseEntity updateOrderStatus(

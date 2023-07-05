@@ -6,13 +6,15 @@ import fu.training.FrameMates_API.orderdetail.OrderDetail;
 import fu.training.FrameMates_API.orderdetail.OrderDetailMapper;
 import fu.training.FrameMates_API.orderdetail.OrderDetailModel;
 import fu.training.FrameMates_API.orderdetail.OrderDetailService;
-import fu.training.FrameMates_API.servicepack.ServicePack;
 import fu.training.FrameMates_API.servicepack.ServicePackService;
 import fu.training.FrameMates_API.share.exceptions.InvalidStatusStringException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.EnumConverter;
+import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.*;
@@ -78,10 +80,20 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderModel> getOrdersBystatus(String status) throws InvalidStatusStringException {
+	public PaginationResponse<OrderModel> getOrdersByStatus(String status, Pageable pageable) throws InvalidStatusStringException {
 
 		int intStatus = EnumConverter.convertStringToEnumValue(status, OrderStatus.class);
-		return orderMapper.toModels(orderRepository.findOrdersByStatus(intStatus));
+		Page<Order> orders = orderRepository.findOrdersByStatus(intStatus, pageable);
+
+		if(orders.isEmpty()) throw new RecordNotFoundException("The list is empty");
+
+		PaginationResponse<OrderModel> result = new PaginationResponse<>();
+		result.setItems(orderMapper.toModels(orders.getContent()));
+		result.setPageNum(orders.getNumber());
+		result.setPageSize(orders.getSize());
+		result.setTotalPageNum(orders.getTotalPages());
+		result.setTotalItems(orders.getTotalElements());
+		return result;
 	}
 
 }

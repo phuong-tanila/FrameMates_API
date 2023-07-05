@@ -54,7 +54,7 @@ public class Customer implements Serializable {
 	@ToString.Exclude
 	private Administrator admin;
 
-	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity=Account.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
