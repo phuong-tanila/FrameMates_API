@@ -6,15 +6,16 @@ import fu.training.FrameMates_API.account.AccountMapper;
 import fu.training.FrameMates_API.account.AccountService;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
+import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -55,14 +56,27 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer getCustomerById(int customerId) throws RecordNotFoundException {
-		Optional<Customer> result = customerRepository.findById(customerId);
+		Optional<Customer> result = customerRepository.findByCustomerIdAndStatus(customerId, 1);
 		if(result.isEmpty()) throw new RecordNotFoundException("Can't find customer by id: " + customerId);
 		return result.get();
 	}
 
 	@Override
+	public PaginationResponse<CustomerModel> getCustomerByEmailOrPhoneOrName(String searchKey, Pageable pageable) {
+		PaginationResponse<CustomerModel> result = new PaginationResponse<>();
+		Page<Customer> customerPage = customerRepository.findAllByAccount_FullNameContainingOrAccount_EmailContainingOrAccount_PhoneContaining(searchKey ,searchKey , searchKey, pageable);
+		result.setItems(customerMapper.toModels(customerPage.getContent()));
+		result.setTotalItems(customerPage.getTotalElements());
+		result.setTotalPageNum(customerPage.getTotalPages());
+		result.setPageSize(customerPage.getSize());
+		result.setPageNum(customerPage.getNumber());
+//		result.setTotalItems();
+		return result;
+	}
+
+	@Override
 	public void banCustomer(Integer customerId) {
-		Customer customer = customerRepository.findById(customerId)
+		Customer customer = customerRepository.findByCustomerIdAndStatus(customerId, 1)
 				.orElseThrow(() -> new RecordNotFoundException("Customer ID not found"));
 		customer.setStatus(0);
 		customerRepository.save(customer);
@@ -70,7 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void unbanCustomer(Integer customerId) {
-		Customer customer = customerRepository.findById(customerId)
+		Customer customer = customerRepository.findByCustomerIdAndStatus(customerId, 0)
 				.orElseThrow(() -> new RecordNotFoundException("Customer ID not found"));
 		customer.setStatus(1);
 		customerRepository.save(customer);
@@ -78,3 +92,4 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 }
+

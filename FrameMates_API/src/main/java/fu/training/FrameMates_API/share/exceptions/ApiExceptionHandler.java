@@ -31,6 +31,18 @@ public class ApiExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExceptionResponse> handleIllegalArgumentException(
+            IllegalArgumentException ex, WebRequest request
+    ){
+        return new ResponseEntity<>(
+                new ExceptionResponse(
+                    "Illegal argument",
+                        ex.getMessage()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+    }
 
     @ExceptionHandler(DupplicatedUserInfoException.class)
     public ResponseEntity<ExceptionResponse> handleDuppicatedUserInfoExceptionException(

@@ -1,11 +1,14 @@
 package fu.training.FrameMates_API.studio;
 
+import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.customer.CustomerModel;
 import fu.training.FrameMates_API.studio.StudioService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +28,14 @@ public class StudioController {
 		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.UNPROCESSABLE_ENTITY) ;
 	}
 
+	@PostMapping()
+	public ResponseEntity createStudio(
+			@RequestBody @Valid StudioModel studio,
+			Authentication authentication
+	){
+		Account currentAccount = (Account) authentication.getPrincipal();
+		return ResponseEntity.ok(studioService.createStudio(studio, currentAccount.getEmployee()));
+	}
 	@GetMapping()
 	public ResponseEntity getById(@RequestParam String name) {
 		List<StudioModel> studioModels = studioService.getByName(name);

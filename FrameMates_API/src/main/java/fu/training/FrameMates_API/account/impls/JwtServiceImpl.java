@@ -1,6 +1,6 @@
 package fu.training.FrameMates_API.account.impls;
 
-import fu.training.FrameMates_API.account.TokenTypeEnum;
+import fu.training.FrameMates_API.account.TokenType;
 import fu.training.FrameMates_API.account.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -9,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,11 +31,19 @@ public class JwtServiceImpl implements JwtService {
 
     public JwtServiceImpl() {
         Map<String, Object> claims = new HashMap<>();
-//        claims.put("")
+//        claims.put("role", )
         this.extraClaims = claims;
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration, String secretKey) {
+        extraClaims.put(
+                "role",
+                userDetails.getAuthorities()
+                        .stream().toList()
+                        .get(0).getAuthority()
+                        .replace("ROLE_", "")
+                        .toLowerCase()
+        );
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -45,9 +54,9 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
     }
 
-    public String generateToken(TokenTypeEnum tokenTypeEnum, UserDetails userDetails){
+    public String generateToken(TokenType tokenTypeEnum, UserDetails userDetails){
 
-        if(TokenTypeEnum.ACCESSTOKEN == tokenTypeEnum){
+        if(TokenType.ACCESSTOKEN == tokenTypeEnum){
             return generateToken(extraClaims, userDetails, accessTokenExpiration, accessTokenSecretKey);
         }
         return generateToken(new HashMap<>(), userDetails, refreshTokenExpiration, refreshTokenSecretKey);
@@ -59,8 +68,8 @@ public class JwtServiceImpl implements JwtService {
 //    public Claims getClaimsFromAccessToken(String token){
 //        return getClaimsFromJWT(token, refreshTokenSecretKey);
 //    }
-    public Claims getClaimsFromToken(TokenTypeEnum tokenTypeEnum, String token)  {
-        String jwtSecret = tokenTypeEnum == TokenTypeEnum.REFRESHTOKEN ? refreshTokenSecretKey : accessTokenSecretKey;
+    public Claims getClaimsFromToken(TokenType tokenTypeEnum, String token)  {
+        String jwtSecret = tokenTypeEnum == TokenType.REFRESHTOKEN ? refreshTokenSecretKey : accessTokenSecretKey;
         return Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)

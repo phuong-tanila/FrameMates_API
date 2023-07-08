@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,8 +33,8 @@ public class AuthenticateController {
             );
             
 //			SecurityContextHolder.getContext().setAuthentication(authentication);
-            String accessToken = jwtService.generateToken(TokenTypeEnum.ACCESSTOKEN, (Account) authentication.getPrincipal());
-            String refreshToken = jwtService.generateToken(TokenTypeEnum.REFRESHTOKEN, (Account) authentication.getPrincipal());
+            String accessToken = jwtService.generateToken(TokenType.ACCESSTOKEN, (Account) authentication.getPrincipal());
+            String refreshToken = jwtService.generateToken(TokenType.REFRESHTOKEN, (Account) authentication.getPrincipal());
             return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken, refreshToken), HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();
