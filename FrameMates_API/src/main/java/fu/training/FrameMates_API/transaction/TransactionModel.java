@@ -11,7 +11,7 @@ public class TransactionModel {
     private Integer transactionId;
     private Integer amount;
     private Timestamp createDate;
-    private Integer status;
+    private String status;
     private Boolean transactionType;
     private StudioModel studio;
     private PaymentModel payment;

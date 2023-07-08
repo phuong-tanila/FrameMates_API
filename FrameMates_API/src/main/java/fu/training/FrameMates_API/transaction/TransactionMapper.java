@@ -10,16 +10,16 @@ import java.util.List;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface TransactionMapper {
-//    @Named("statusEnumToString")
-//    default String statusEnumToString(Integer status) {
-//        return EnumConverter.convertEnumValueToString(status, TransactionStatus.class);
-//    }
+    @Named("statusEnumToString")
+    default String statusEnumToString(Integer status) {
+        return EnumConverter.convertEnumValueToString(status, TransactionStatus.class);
+    }
 
     Transaction toEntity (TransactionModel model);
 
-//    @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
     TransactionModel toModel (Transaction entity);
 
-//    @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
     List<TransactionModel> toModels(List<Transaction> entities);
 }
