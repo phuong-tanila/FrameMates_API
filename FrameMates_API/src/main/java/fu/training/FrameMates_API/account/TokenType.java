@@ -1,6 +1,6 @@
 package fu.training.FrameMates_API.account;
 
-public enum TokenTypeEnum {
+public enum TokenType {
     REFRESHTOKEN,
     ACCESSTOKEN
 }

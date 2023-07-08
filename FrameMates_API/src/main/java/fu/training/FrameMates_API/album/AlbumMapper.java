@@ -1,8 +1,12 @@
 package fu.training.FrameMates_API.album;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
 public interface AlbumMapper{
 
     Album toEntity (AlbumModel model);
