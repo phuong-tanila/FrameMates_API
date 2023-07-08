@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 
 @Data
 public class StudioModel {
+    private Integer studioId;
     private String name;
     private String address;
     private String description;

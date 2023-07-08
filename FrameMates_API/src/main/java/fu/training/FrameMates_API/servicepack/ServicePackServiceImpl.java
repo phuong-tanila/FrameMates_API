@@ -47,8 +47,8 @@ public class ServicePackServiceImpl implements ServicePackService {
 //	private
 	@Override
 	public List<ServicePackModel> getAll() {
-		List<ServicePack> listSerivce = servicePackRepository.findAll();
-		return servicePackMapper.toModels(listSerivce);
+		List<ServicePack> listService = servicePackRepository.findAll();
+		return servicePackMapper.toModels(listService);
 	}
 
 
@@ -79,7 +79,9 @@ public class ServicePackServiceImpl implements ServicePackService {
 	}
 	@Override
 	public ServicePackModel getById(int serviceId) throws RecordNotFoundException {
-		return servicePackMapper.toModel(getServiceById(serviceId));
+		ServicePack servicePack = getServiceById(serviceId);
+		ServicePackModel servicePackModel = servicePackMapper.toModel(servicePack);
+		return servicePackModel;
 	}
 	@Override
 	public ServicePack getServiceById(int serviceId) throws RecordNotFoundException {

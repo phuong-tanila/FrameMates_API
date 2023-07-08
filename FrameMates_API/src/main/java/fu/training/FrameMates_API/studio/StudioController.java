@@ -26,7 +26,7 @@ public class StudioController {
 	}
 
 	@GetMapping()
-	public ResponseEntity getById(@RequestParam String name) {
+	public ResponseEntity getByName(@RequestParam String name) {
 		List<StudioModel> studioModels = studioService.getByName(name);
 		return studioModels != null ? ResponseEntity.ok(studioModels) : new ResponseEntity<>("Studio not found",HttpStatus.UNPROCESSABLE_ENTITY) ;
 	}

@@ -2,6 +2,7 @@ package fu.training.FrameMates_API.employee;
 
 import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.account.AccountMapper;
+import fu.training.FrameMates_API.account.AccountModel;
 import fu.training.FrameMates_API.account.AccountService;
 import fu.training.FrameMates_API.customer.Customer;
 import fu.training.FrameMates_API.customer.CustomerModel;
@@ -43,8 +44,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeModel findByAccountId(int accountId) throws RecordNotFoundException {
 		Employee result = employeeRepository.findByAccountAccountId(accountId);
-		if(result != null)
-			return employeeMapper.toModel(result);
+		EmployeeModel employeeModel = employeeMapper.toModel(result);
+		if(result != null) {
+			AccountModel accountModel = accountMapper.toModel(result.getAccount());
+			employeeModel.setAccountModel(accountModel);
+			return employeeModel;
+		}
 		throw new RecordNotFoundException("Can not find employee by account id: " + accountId);
 	}
 
