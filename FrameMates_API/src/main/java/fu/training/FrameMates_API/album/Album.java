@@ -49,7 +49,7 @@ public class Album implements Serializable {
     @JoinColumn(name = "StudioId", referencedColumnName = "StudioId")
 	private Studio studio;
 	
-	@OneToMany(mappedBy="album", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = MediaFile.class)
+	@OneToMany(mappedBy="album", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, targetEntity = MediaFile.class)
 	private Set<MediaFile> album_mediaFile;
 
 }

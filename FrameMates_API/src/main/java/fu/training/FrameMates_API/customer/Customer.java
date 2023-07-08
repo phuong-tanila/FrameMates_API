@@ -29,7 +29,6 @@ import org.hibernate.annotations.Where;
 @Transactional
 @JsonSerialize
 @Table(name="Customer")
-@Where(clause = "Status=1")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = 6529685098267757690L;
 	@Id

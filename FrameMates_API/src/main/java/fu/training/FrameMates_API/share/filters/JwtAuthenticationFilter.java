@@ -2,7 +2,7 @@ package fu.training.FrameMates_API.share.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fu.training.FrameMates_API.share.exceptions.ExceptionResponse;
-import fu.training.FrameMates_API.account.TokenTypeEnum;
+import fu.training.FrameMates_API.account.TokenType;
 import fu.training.FrameMates_API.account.AccountService;
 import fu.training.FrameMates_API.account.JwtService;
 import io.jsonwebtoken.Claims;
@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // Lấy jwt từ request
             String jwt = getJwtFromRequest(request);
             if (StringUtils.hasText(jwt))  {
-                Claims claims = jwtService.getClaimsFromToken(TokenTypeEnum.ACCESSTOKEN, jwt);
+                Claims claims = jwtService.getClaimsFromToken(TokenType.ACCESSTOKEN, jwt);
                 String userEmail = claims.getSubject();
                 UserDetails userDetails = accountService.loadUserByUsername(userEmail);
 //                System.out.println(userDetails);

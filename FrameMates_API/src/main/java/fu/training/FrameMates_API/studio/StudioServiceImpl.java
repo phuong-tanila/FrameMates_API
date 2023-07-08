@@ -1,9 +1,13 @@
 package fu.training.FrameMates_API.studio;
 
+import fu.training.FrameMates_API.employee.Employee;
+import fu.training.FrameMates_API.employee.EmployeeMapper;
+import fu.training.FrameMates_API.employee.EmployeeModel;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +16,8 @@ import java.util.Optional;
 public class StudioServiceImpl implements StudioService {
 	@Autowired
 	private StudioMapper studioMapper;
+	@Autowired
+	private EmployeeMapper employeeMapper;
 	@Autowired
 	private StudioRepository studioRepository;
 	private Studio getStudio(Integer id) {
@@ -29,8 +35,21 @@ public class StudioServiceImpl implements StudioService {
 	}
 
 	@Override
-	public StudioModel createStudio(StudioModel studioModel) {
-		return studioMapper.toModel(studioRepository.save(studioMapper.toEntity(studioModel)));
+	public StudioModel createStudio(StudioModel studioModel, Employee employee) {
+		if(employee == null) throw new IllegalArgumentException("You must be employee to do this function");
+		if(studioRepository.findByOwner_EmployeeId(employee.getEmployeeId()) != null){
+			throw new IllegalArgumentException("You must not own a studio to do this function");
+		}
+		studioModel.setOwner(employeeMapper.toModel(employee));
+		studioModel.setBalance(0);
+		studioModel.setStatus(1);
+		studioModel.setCreateDate(new Timestamp(System.currentTimeMillis()));
+		studioModel.setTotalRating((double) 0);
+
+		var studioEntity = studioMapper.toEntity(studioModel);
+		studioEntity.setOwner(employee);
+
+		return studioMapper.toModel(studioRepository.save(studioEntity));
 	}
 
 	@Override

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, Integer> {
     List<Studio> findAllByNameContains(String name);
+    Studio findByOwner_EmployeeId(int employeeId);
 }

@@ -28,7 +28,6 @@ import org.hibernate.annotations.Where;
 @Transactional
 @JsonSerialize
 @Table(name="ServicePack")
-@Where(clause="Status=1")
 public class ServicePack implements Serializable {
 	private static final long serialVersionUID = 6529685098267757690L;
 	@Id

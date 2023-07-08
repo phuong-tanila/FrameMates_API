@@ -62,7 +62,7 @@ public class Studio implements Serializable {
 	@Column(name="Balance")
 	private Integer balance;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="Owner")
 	private Employee owner;
 
