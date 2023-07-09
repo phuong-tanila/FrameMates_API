@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 
 @Data
 public class StudioModel {
+    private Integer studioId;
     @Size(min=1, max=500)
     private String name;
     @Size(min=1, max=500)

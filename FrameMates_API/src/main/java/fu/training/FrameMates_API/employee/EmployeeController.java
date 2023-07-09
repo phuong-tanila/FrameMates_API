@@ -3,12 +3,17 @@ package fu.training.FrameMates_API.employee;
 
 import fu.training.FrameMates_API.customer.CustomerModel;
 import fu.training.FrameMates_API.employee.EmployeeService;
+import fu.training.FrameMates_API.servicepack.ServicePackModel;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -23,5 +28,11 @@ public class EmployeeController {
 	public ResponseEntity createEmployee(@RequestBody @Valid EmployeeModel employee) throws DupplicatedUserInfoException {
 		EmployeeModel employeeModel = employeeService.createEmployee(employee);
 		return ResponseEntity.ok(employeeModel);
+	}
+
+	@GetMapping("/{accountId}")
+	public ResponseEntity getByAccountId(@PathVariable int accountId) throws RecordNotFoundException {
+		var employee = employeeService.findByAccountId(accountId);
+		return new ResponseEntity<>(employee, HttpStatus.OK);
 	}
 }

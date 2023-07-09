@@ -25,6 +25,7 @@ public class EmployeeModel {
     private Integer status;
     @Valid
     private AccountModel accountModel;
+    private StudioModel studio;
 
 
 //    @OneToOne(mappedBy = "subAdminStudio")
