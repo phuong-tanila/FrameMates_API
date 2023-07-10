@@ -1,10 +1,14 @@
 package fu.training.FrameMates_API.studio;
 
+import fu.training.FrameMates_API.account.Account;
+import fu.training.FrameMates_API.account.AccountModel;
 import fu.training.FrameMates_API.employee.Employee;
 import fu.training.FrameMates_API.employee.EmployeeMapper;
 import fu.training.FrameMates_API.employee.EmployeeModel;
+import fu.training.FrameMates_API.employee.EmployeeRepository;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -20,6 +24,8 @@ public class StudioServiceImpl implements StudioService {
 	private EmployeeMapper employeeMapper;
 	@Autowired
 	private StudioRepository studioRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	private Studio getStudio(Integer id) {
 		Studio studio = null;
 		Optional optionalStudio = studioRepository.findById(id);
@@ -80,5 +86,19 @@ public class StudioServiceImpl implements StudioService {
 		studio.setAvatarStudio(studioModel.getAvatarStudio());
 		studio.setCoverImage(studioModel.getCoverImage());
 		return studioMapper.toModel(studioRepository.save(studio));
+	}
+
+	@Override
+	public StudioModel findByCurrentOwner(Authentication authentication) throws RecordNotFoundException {
+		Account account = (Account) authentication.getPrincipal();
+		Employee employee = employeeRepository.findByAccountAccountId(account.getAccountId());
+		Studio studio = studioRepository.findByOwner_EmployeeId(employee.getEmployeeId());
+		StudioModel studioModel = studioMapper.toModel(studio);
+		if(studioModel != null) {
+			EmployeeModel owner = employeeMapper.toModel(employee);
+			studioModel.setOwner(owner);
+			return studioModel;
+		}
+		throw new RecordNotFoundException("Can not find studio by employee id: " + employee.getEmployeeId());
 	}
 }
