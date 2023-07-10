@@ -9,6 +9,7 @@ import fu.training.FrameMates_API.customer.CustomerModel;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -59,5 +60,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(result != null)
 			return result;
 		throw new RecordNotFoundException("Can not find employee by id: " + employeeId);
+	}
+
+	@Override
+	public EmployeeModel getCurrentEmployee(Authentication authentication) throws RecordNotFoundException {
+		Account account = (Account) authentication.getPrincipal();
+		EmployeeModel employeeModel = findByAccountId(account.getAccountId());
+		return employeeModel;
 	}
 }

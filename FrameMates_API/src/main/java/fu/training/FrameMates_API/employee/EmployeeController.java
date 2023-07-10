@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,11 @@ public class EmployeeController {
 	@GetMapping("/{accountId}")
 	public ResponseEntity getByAccountId(@PathVariable int accountId) throws RecordNotFoundException {
 		var employee = employeeService.findByAccountId(accountId);
+		return new ResponseEntity<>(employee, HttpStatus.OK);
+	}
+	@GetMapping("/current")
+	public ResponseEntity getCurrentEmployee(Authentication authentication) throws RecordNotFoundException {
+		var employee = employeeService.getCurrentEmployee(authentication);
 		return new ResponseEntity<>(employee, HttpStatus.OK);
 	}
 }

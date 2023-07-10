@@ -25,7 +25,7 @@ public class StudioController {
 	@GetMapping("/{id}")
 	public ResponseEntity getById(@PathVariable Integer id) {
 		StudioModel studioModel = studioService.getById(id);
-		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.UNPROCESSABLE_ENTITY) ;
+		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.NOT_FOUND) ;
 	}
 
 	@PostMapping()
