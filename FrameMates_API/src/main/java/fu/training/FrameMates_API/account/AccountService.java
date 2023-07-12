@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 public interface AccountService {
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException ;
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
 
     List<Account> findAccountsByUsernameOrPhone(String username, String phone);
@@ -17,6 +17,8 @@ public interface AccountService {
     List<Account> findAll();
 
     Account createAccount(Account account);
+
+    Account findAccountByEmployeeId(int employeeId) throws RecordNotFoundException;
 
     void validateAccount(Account mappedAccount) throws DupplicatedUserInfoException;
 }

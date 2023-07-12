@@ -31,7 +31,7 @@ public class CustomerController {
 	}
 
 	@GetMapping()
-	public ResponseEntity<?> getCustomerByEmailOrPhone(@RequestParam("emailOrPhone") String emailOrPhone) {
+	public ResponseEntity<?> getCustomerByEmailOrPhone(@RequestParam(value = "emailOrPhone") String emailOrPhone) {
 		List<CustomerModel> customerModels = customerService.getCustomerByEmailOrPhone(emailOrPhone);
 
 		return customerModels != null ? new ResponseEntity<>(customerModels, HttpStatus.OK)
@@ -40,9 +40,8 @@ public class CustomerController {
 
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ADMIN')")
-
 	public ResponseEntity<?> getAllCustomerByEmailOrPhoneOrName(
-			@RequestParam("emailOrPhone") String emailOrPhone,
+			@RequestParam(value = "emailOrPhone", defaultValue = "") String emailOrPhone,
 			@RequestParam(defaultValue = "16") int pageSize
 			, @RequestParam(defaultValue = "0") int pageNo
 			, @RequestParam(defaultValue = "") String[] sort

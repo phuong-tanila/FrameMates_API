@@ -8,5 +8,7 @@ public interface EmployeeService {
     EmployeeModel createEmployee(EmployeeModel employeeModel) throws DupplicatedUserInfoException;
     EmployeeModel findByAccountId(int accountId) throws RecordNotFoundException;
 
+    Employee updateEmployeeUsingEntity(Employee employee);
     Employee findByEmployeeId(int employeeId) throws RecordNotFoundException;
+
 }

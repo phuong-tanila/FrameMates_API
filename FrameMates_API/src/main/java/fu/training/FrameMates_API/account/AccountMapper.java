@@ -15,14 +15,16 @@ public abstract class AccountMapper {
 //    @Mapping(source = "customer", target = "customer")
 //    @Mapping(source = "administrator", target = "administrator")
     @Mapping(source = "password", target = "password", qualifiedByName = "encryptPasswordFromModel")
+    @Mapping(source = "employee.studio", target = "employee.studio", ignore = true)
     public abstract Account toEntity (AccountModel model);
 //    @Mapping(source = "employee", target = "employee")
 //    @Mapping(source = "customer", target = "customer")
 //    @Mapping(source = "administrator", target = "administrator")
     @Mapping(source = "password", target = "password", ignore = true)
+    @Mapping(source = "employee.studio", target = "employee.studio", ignore = true)
     public abstract AccountModel toModel (Account entity);
     @Named("encryptPasswordFromModel")
-     String encryptPasswordFromModel(String password){
+    String encryptPasswordFromModel(String password){
         return passwordEncoder.encode(password);
     }
 

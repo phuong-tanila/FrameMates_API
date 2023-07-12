@@ -24,7 +24,6 @@ public class AuthenticateController {
     private AuthenticationProvider authenticationProvider;
     @PostMapping("/login")
     public ResponseEntity login(@Valid @RequestBody LoginRequest request){
-        try {
             Authentication authentication = authenticationProvider.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getCredential(),
@@ -36,18 +35,8 @@ public class AuthenticateController {
             String accessToken = jwtService.generateToken(TokenType.ACCESSTOKEN, (Account) authentication.getPrincipal());
             String refreshToken = jwtService.generateToken(TokenType.REFRESHTOKEN, (Account) authentication.getPrincipal());
             return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken, refreshToken), HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Invalid credentials", ex.getLocalizedMessage()), HttpStatus.OK);
-
-        }
 
     }
-    @GetMapping("/login")
-    public String test(){
-        return "123";
-    }
-
     @PostMapping("/aaa")
     public ResponseEntity create(
 //			@RequestBody CommentModel commentModel,

@@ -54,10 +54,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public Employee updateEmployeeUsingEntity(Employee employee) {
+		return employeeRepository.save(employee);
+	}
+
+	@Override
 	public Employee findByEmployeeId(int employeeId) throws RecordNotFoundException {
 		Employee result = employeeRepository.findById(employeeId).get();
 		if(result != null)
 			return result;
 		throw new RecordNotFoundException("Can not find employee by id: " + employeeId);
 	}
+
+
+
+
 }

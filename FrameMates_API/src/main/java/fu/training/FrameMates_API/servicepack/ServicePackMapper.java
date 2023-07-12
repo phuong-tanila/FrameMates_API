@@ -13,10 +13,12 @@ import java.util.List;
 )
 public interface ServicePackMapper {
 
-//    @Mapping(source = "employee", target = "employee")
+    @Mapping(source = "studio.owner.studio", target = "studio.owner.studio", ignore = true)
 //    @Mapping(source = "status", target = "status", qualifiedByName = "statusStringToEnum")
     ServicePack toEntity (ServicePackModel model);
     @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
+    @Mapping(source = "studio.owner.studio", target = "studio.owner.studio", ignore = true)
+    
     ServicePackModel toModel (ServicePack entity);
     @Named("statusEnumToString")
     default String statusEnumToString(int status) {

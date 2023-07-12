@@ -16,4 +16,5 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query("SELECT a FROM Account a WHERE a.username = :username OR a.phone = :phone")
     List<Account> findAllByUsernameOrPhone(String username, String phone);
 
+    Account findByEmployeeEmployeeId(int employeeId);
 }

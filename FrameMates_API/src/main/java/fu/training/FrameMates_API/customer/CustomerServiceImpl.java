@@ -65,7 +65,11 @@ public class CustomerServiceImpl implements CustomerService {
 	public PaginationResponse<CustomerModel> getCustomerByEmailOrPhoneOrName(String searchKey, Pageable pageable) {
 		PaginationResponse<CustomerModel> result = new PaginationResponse<>();
 		Page<Customer> customerPage = customerRepository.findAllByAccount_FullNameContainingOrAccount_EmailContainingOrAccount_PhoneContaining(searchKey ,searchKey , searchKey, pageable);
-		result.setItems(customerMapper.toModels(customerPage.getContent()));
+		List<Customer> customers = customerPage.getContent();
+		customers.forEach(c -> {
+			c.getAccount().setCustomer(null);
+		});
+		result.setItems(customerMapper.toModels(customers));
 		result.setTotalItems(customerPage.getTotalElements());
 		result.setTotalPageNum(customerPage.getTotalPages());
 		result.setPageSize(customerPage.getSize());

@@ -2,10 +2,12 @@ package fu.training.FrameMates_API.studio;
 
 import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.customer.CustomerModel;
+import fu.training.FrameMates_API.share.helpers.PaginationHelper;
 import fu.training.FrameMates_API.studio.StudioService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,6 +30,18 @@ public class StudioController {
 		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.UNPROCESSABLE_ENTITY) ;
 	}
 
+	@GetMapping("status/{status}")
+	public ResponseEntity getByStatus(
+			@PathVariable Integer status,
+			@RequestParam(defaultValue = "16") int pageSize
+			, @RequestParam(defaultValue = "0") int pageNo
+			, @RequestParam(defaultValue = "") String[] sort
+			, @RequestParam(defaultValue = "") String searchKey
+	){
+		Pageable pageable = PaginationHelper.getPageable(pageNo, pageSize, sort);
+		return new ResponseEntity<>(studioService.searchByStatus(status, searchKey, pageable), HttpStatus.OK);
+
+	}
 	@PostMapping()
 	public ResponseEntity createStudio(
 			@RequestBody @Valid StudioModel studio,

@@ -35,12 +35,12 @@ public class AlbumController {
 	}
 	@PreAuthorize("hasRole('EMPLOYEE')")
 	@DeleteMapping("{id}")
-	public AlbumModel deleteAlbum(
+	public ResponseEntity deleteAlbum(
 			@PathVariable int id,
 			Authentication authentication
-	) throws ExecutionControl.NotImplementedException {
+	) {
 		Account currentAccount = (Account) authentication.getPrincipal();
-
-		return albumService.deleteAlbum(id, currentAccount.getEmployee());
+		albumService.deleteAlbum(id, currentAccount.getEmployee());
+		return ResponseEntity.ok().build();
 	}
 }

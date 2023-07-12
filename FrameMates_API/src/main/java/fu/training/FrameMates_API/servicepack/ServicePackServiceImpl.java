@@ -94,16 +94,17 @@ public class ServicePackServiceImpl implements ServicePackService {
 	public ServicePackModel createService(ServicePackModel servicePackModel){
 		int employeeId = servicePackModel.getCreateBy().getEmployeeId();
 		Employee employee = employeeService.findByEmployeeId(employeeId);
-		if(employee.getStudio() == null) throw new RecordNotFoundException("You must own or work for a studio to do perform this action");
+//		if(employee.getStudio() == null) throw new RecordNotFoundException("You must own or work for a studio to do perform this action");
 		servicePackModel.setCreateDate(new Timestamp(new Date().getTime()));
 		servicePackModel.setRating(Double.valueOf(0));
 		servicePackModel.setView(0);
 		servicePackModel.setDiscount(0);
-		log.error(ServiceStatus.CREATED.toString());
 		String serviceStatus = EnumConverter.convertEnumValueToString(ServiceStatus.CREATED.ordinal(), ServiceStatus.class);
 //		servicePackModel.setStatus(serviceStatus);
 		log.error(serviceStatus);
 		ServicePack service = servicePackMapper.toEntity(servicePackModel);
+		ServicePack tmpService = service;
+		service.getServicePack_mediaService().forEach(f -> f.setServicePack(tmpService));
 		service.setStudio(employee.getStudio());
 		service.setStatus(ServiceStatus.CREATED.ordinal());
 		service = servicePackRepository.save(service);
