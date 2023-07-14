@@ -2,6 +2,7 @@ package fu.training.FrameMates_API.customer;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
 import fu.training.FrameMates_API.share.helpers.PaginationHelper;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +55,24 @@ public class CustomerController {
 				: new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
 	}
 
+	@PatchMapping("{customerId}")
+	public  ResponseEntity updateCustomer(
+			@Valid @RequestBody CustomerModel customerModel,
+			Authentication authentication,
+			@PathVariable int customerId
+	) throws Exception {
+		if(authentication == null) throw new Exception("You must logged in to do this function");
+		var currentAccount = (Account) authentication.getPrincipal();
+		var currentCustomer = currentAccount.getCustomer();
+		if(currentCustomer == null){
+			throw new Exception("You need to be a customer to do this function");
+		}
+		if(currentCustomer.getCustomerId() != customerId){
+			throw new Exception("You are not allowed to do this function");
+		}
+		customerService.updateCustomer(customerModel);
+		return new ResponseEntity(HttpStatus.OK);
+	}
 
 	@PutMapping("/ban/{customer_id}")
 	public ResponseEntity<?> banCustomer(@PathVariable("customer_id") Integer customerId) {

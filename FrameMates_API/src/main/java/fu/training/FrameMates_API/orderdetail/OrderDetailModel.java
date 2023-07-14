@@ -23,6 +23,6 @@ public class OrderDetailModel {
 
     private java.sql.Timestamp postDate;
 
-    private ServicePackModel servicePackModel;
+    private ServicePackModel servicePack;
 
 }

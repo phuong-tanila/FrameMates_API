@@ -9,6 +9,8 @@ import fu.training.FrameMates_API.studio.StudioMapper;
 import fu.training.FrameMates_API.studio.StudioService;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -54,5 +56,15 @@ public class AlbumServiceImpl implements AlbumService {
 		Optional<Album> otnAlbum = albumRepository.findById(id);
 		if(otnAlbum.isEmpty()) throw new RecordNotFoundException("Album id not found!!");
 		albumRepository.delete(otnAlbum.get());
+	}
+
+	@Override
+	public List<AlbumModel> getAlbumsByStudioId(int studioId) {
+		return albumMapper.toModels(albumRepository.findByStudio_StudioId(studioId));
+	}
+
+	@Override
+	public List<AlbumModel> getAlbumsByByCurrentStudio(Authentication authentication) {
+		return null;
 	}
 }

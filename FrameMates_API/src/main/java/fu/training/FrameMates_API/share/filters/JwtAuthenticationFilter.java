@@ -66,10 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             );
             response.setContentType("application/json");
             response.getWriter().println(new ObjectMapper().writeValueAsString(exceptionResponse));
-        } catch (Exception ex) {
-            log.error("failed on set user authentication");
-            ex.printStackTrace();
-        }
+        } 
 
     }
 

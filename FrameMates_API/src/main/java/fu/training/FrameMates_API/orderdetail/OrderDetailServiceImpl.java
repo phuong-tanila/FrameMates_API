@@ -20,4 +20,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public List<OrderDetailModel> getFeedbackByStudioId(int studioId) {
 		return orderDetailMapper.toModels(orderDetailRepository.getOrderDetailByServicePack_Studio_StudioIdAndRatingNotNull(studioId));
 	}
+
+	@Override
+	public List<OrderDetailModel> getFeedbackByOrderId(int orderId) {
+		return orderDetailMapper.toModels(orderDetailRepository.getOrderDetailByOrder_OrderId(orderId));
+	}
 }

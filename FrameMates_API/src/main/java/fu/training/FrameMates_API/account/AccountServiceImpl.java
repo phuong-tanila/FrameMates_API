@@ -48,6 +48,13 @@ public class  AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
+    public Account findAccountByCustomerId(int customerId) throws RecordNotFoundException {
+        Account result = accountRepository.findByCustomer_CustomerId(customerId);
+        if(result == null) throw  new RecordNotFoundException("Customer id not found");
+        return result;
+    }
+
+    @Override
     public void validateAccount(Account mappedAccount) throws DupplicatedUserInfoException {
         List<Account> accountList = findAccountsByUsernameOrPhone(mappedAccount.getUsername(), mappedAccount.getPhone());
         if(accountList != null && !accountList.isEmpty()) {

@@ -96,21 +96,26 @@ public class ApiExceptionHandler {
     public ResponseEntity handleInvalidEnumString(
             InvalidStatusStringException ex
     ){
-        return new ResponseEntity(new ExceptionResponse("Invalid staus", ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(new ExceptionResponse("Invalid status", ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler(HttpClientErrorException.MethodNotAllowed.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String  handleMethodArgumentNotAllowed(
-            HttpRequestMethodNotSupportedException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request
-    ){
-        return "123";
-    }@ExceptionHandler(BadCredentialsException.class)
+
+    @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity  handleBadCredentialsException(
             BadCredentialsException ex,
             HttpHeaders headers, HttpStatus status, WebRequest request
     ){
         return  new ResponseEntity(new ExceptionResponse("Invalid credentials exception", ex.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(MissingBearerTokenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleMissingBearerTokenException(
+            MissingBearerTokenException ex, WebRequest request
+    ){
+        return new ExceptionResponse(
+                "Record not found",
+                ex.getMessage()
+        );
     }
 }

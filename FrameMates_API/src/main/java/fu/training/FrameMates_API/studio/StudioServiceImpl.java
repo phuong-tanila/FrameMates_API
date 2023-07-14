@@ -5,12 +5,19 @@ import fu.training.FrameMates_API.employee.Employee;
 import fu.training.FrameMates_API.employee.EmployeeMapper;
 import fu.training.FrameMates_API.employee.EmployeeModel;
 import fu.training.FrameMates_API.employee.EmployeeService;
+import fu.training.FrameMates_API.account.Account;
+import fu.training.FrameMates_API.account.AccountModel;
+import fu.training.FrameMates_API.employee.Employee;
+import fu.training.FrameMates_API.employee.EmployeeMapper;
+import fu.training.FrameMates_API.employee.EmployeeModel;
+import fu.training.FrameMates_API.employee.EmployeeRepository;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +40,8 @@ public class StudioServiceImpl implements StudioService {
 	private EmployeeService employeeService;
 	@Autowired
 	private EntityManager entityManager;
-
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	private Studio getStudio(Integer id) {
 		Studio studio = null;
 		Optional optionalStudio = studioRepository.findById(id);
@@ -113,5 +121,17 @@ public class StudioServiceImpl implements StudioService {
 		result.setPageSize(studioPage.getSize());
 		result.setTotalPageNum(studioPage.getTotalPages());
 		return result;
+	}
+	public StudioModel findByCurrentOwner(Authentication authentication) throws RecordNotFoundException {
+		Account account = (Account) authentication.getPrincipal();
+		Employee employee = employeeRepository.findByAccountAccountId(account.getAccountId());
+		Studio studio = studioRepository.findByOwner_EmployeeId(employee.getEmployeeId());
+		StudioModel studioModel = studioMapper.toModel(studio);
+		if(studioModel != null) {
+			EmployeeModel owner = employeeMapper.toModel(employee);
+			studioModel.setOwner(owner);
+			return studioModel;
+		}
+		throw new RecordNotFoundException("Can not find studio by employee id: " + employee.getEmployeeId());
 	}
 }

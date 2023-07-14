@@ -18,7 +18,8 @@ public interface ServicePackMapper {
     ServicePack toEntity (ServicePackModel model);
     @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
     @Mapping(source = "studio.owner.studio", target = "studio.owner.studio", ignore = true)
-    
+    @Mapping(source = "updateBy.studio", target = "updateBy.studio", ignore = true)
+    @Mapping(source = "createBy.studio", target = "createBy.studio", ignore = true)
     ServicePackModel toModel (ServicePack entity);
     @Named("statusEnumToString")
     default String statusEnumToString(int status) {

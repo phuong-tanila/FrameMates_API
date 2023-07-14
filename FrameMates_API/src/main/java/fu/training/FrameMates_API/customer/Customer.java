@@ -24,7 +24,6 @@ import org.hibernate.annotations.Where;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 @Transactional
 @JsonSerialize
@@ -52,13 +51,11 @@ public class Customer implements Serializable {
 	@ManyToOne(targetEntity=Administrator.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="AdminId", referencedColumnName="AdminId", nullable=true)
 	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
 	private Administrator admin;
 
 	@OneToOne(targetEntity=Account.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
 	private Account account;
 
 	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= VoucherWallet.class)

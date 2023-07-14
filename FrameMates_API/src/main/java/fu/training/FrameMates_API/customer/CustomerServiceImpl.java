@@ -94,6 +94,19 @@ public class CustomerServiceImpl implements CustomerService {
 		customerRepository.save(customer);
 	}
 
+	@Override
+	public CustomerModel updateCustomer(CustomerModel customerModel) {
+		var updatingCustomer = getCustomerById(customerModel.getCustomerId());
+		updatingCustomer.setAddress(customerModel.getAddress());
+		updatingCustomer.setBirthDate(customerModel.getBirthDate());
+		var customerAccount = updatingCustomer.getAccount();
+		customerAccount.setAvatar(customerModel.getAccountModel().getAvatar());
+		customerAccount.setFullName(customerModel.getAccountModel().getFullName());
+		customerAccount.setPassword(customerModel.getAccountModel().getPassword());
+		customerRepository.save(updatingCustomer);
+		return null;
+	}
+
 
 }
 

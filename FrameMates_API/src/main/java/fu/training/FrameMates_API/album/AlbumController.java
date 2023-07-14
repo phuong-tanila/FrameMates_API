@@ -14,15 +14,26 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/album")
+@RequestMapping("/api/albums")
 public class AlbumController {
 
 	@Autowired
 	private AlbumService albumService;
 
+	@GetMapping("/studio/{studioId}")
+	public List<AlbumModel> getAllByStudioId(@PathVariable int studioId){
+		return albumService.getAlbumsByStudioId(studioId);
+	}
+
+	@GetMapping("/studio/current")
+	public List<AlbumModel> getAllByCurrentStudio(Authentication authentication){
+		return albumService.getAlbumsByByCurrentStudio(authentication);
+	}
 	@PreAuthorize("hasRole('EMPLOYEE')")
 	@PostMapping
 	public AlbumModel createAlbum(
@@ -43,4 +54,5 @@ public class AlbumController {
 		albumService.deleteAlbum(id, currentAccount.getEmployee());
 		return ResponseEntity.ok().build();
 	}
+
 }

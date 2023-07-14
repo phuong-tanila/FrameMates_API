@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface CustomerService {
     void banCustomer(Integer customerId);
 
     void unbanCustomer(Integer customerId);
+
+    CustomerModel updateCustomer(CustomerModel customerModel);
 }

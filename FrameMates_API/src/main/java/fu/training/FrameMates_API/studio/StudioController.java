@@ -27,7 +27,7 @@ public class StudioController {
 	@GetMapping("/{id}")
 	public ResponseEntity getById(@PathVariable Integer id) {
 		StudioModel studioModel = studioService.getById(id);
-		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.UNPROCESSABLE_ENTITY) ;
+		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.NOT_FOUND) ;
 	}
 
 	@GetMapping("status/{status}")
@@ -59,5 +59,10 @@ public class StudioController {
 	public ResponseEntity update(@PathVariable Integer id, @RequestBody StudioModel studio) {
 		StudioModel studioModel = studioService.update(id, studio);
 		return ResponseEntity.ok(studioModel);
+	}
+	@GetMapping("/current-owner")
+	public ResponseEntity getByCurrentOwner(Authentication authentication) {
+		StudioModel studioModel = studioService.findByCurrentOwner(authentication);
+		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.NOT_FOUND) ;
 	}
 }

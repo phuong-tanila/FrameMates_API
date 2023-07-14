@@ -1,6 +1,7 @@
 package fu.training.FrameMates_API.account;
 
 import fu.training.FrameMates_API.share.exceptions.ExceptionResponse;
+import fu.training.FrameMates_API.share.exceptions.MissingBearerTokenException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +31,26 @@ public class AuthenticateController {
                             request.getPassword()
                     )
             );
-            
-//			SecurityContextHolder.getContext().setAuthentication(authentication);
+
             String accessToken = jwtService.generateToken(TokenType.ACCESSTOKEN, (Account) authentication.getPrincipal());
             String refreshToken = jwtService.generateToken(TokenType.REFRESHTOKEN, (Account) authentication.getPrincipal());
             return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken, refreshToken), HttpStatus.OK);
 
     }
-    @PostMapping("/aaa")
+    @PostMapping("/confirm-password")
     public ResponseEntity create(
-//			@RequestBody CommentModel commentModel,
+            @RequestBody String password,
             Authentication authentication
     ){
-        return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
+        if(authentication == null) throw new MissingBearerTokenException();
+        var currentAccount = (Account) authentication.getPrincipal();
+        authenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        currentAccount.getUsername(),
+                        password
+                )
+        );
+        return ResponseEntity.ok().build();
     }
 
 }

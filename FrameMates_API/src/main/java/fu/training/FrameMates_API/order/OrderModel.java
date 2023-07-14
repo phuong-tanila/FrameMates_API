@@ -9,16 +9,18 @@ import fu.training.FrameMates_API.payment.PaymentModel;
 import fu.training.FrameMates_API.voucherdetail.VoucherDetail;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
-@Data
+@Getter @Setter
 public class OrderModel {
     private Integer orderId;
 
     private java.sql.Timestamp orderDate;
 
-    private Integer status;
+    private String status;
 
     private String description;
 
@@ -34,6 +36,6 @@ public class OrderModel {
 
     private PaymentModel paymentModel;
 
-    private Set<OrderDetailModel> order_OrderDetail;
+    private Set<OrderDetailModel> orderDetails;
 
 }

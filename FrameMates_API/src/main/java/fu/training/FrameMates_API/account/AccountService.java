@@ -19,6 +19,7 @@ public interface AccountService {
     Account createAccount(Account account);
 
     Account findAccountByEmployeeId(int employeeId) throws RecordNotFoundException;
+    Account findAccountByCustomerId(int customerId) throws RecordNotFoundException;
 
     void validateAccount(Account mappedAccount) throws DupplicatedUserInfoException;
 }

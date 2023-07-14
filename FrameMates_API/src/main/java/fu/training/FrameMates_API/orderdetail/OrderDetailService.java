@@ -8,4 +8,5 @@ public interface OrderDetailService {
     OrderDetail createOrderDetails(OrderDetail orderDetail);
 
     List<OrderDetailModel> getFeedbackByStudioId(int studioId);
+    List<OrderDetailModel> getFeedbackByOrderId(int orderId);
 }
