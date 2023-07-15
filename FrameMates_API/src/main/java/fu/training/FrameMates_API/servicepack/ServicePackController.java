@@ -55,6 +55,18 @@ public class ServicePackController {
         var entity = servicePackService.getById(serviceId);
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
+    @GetMapping("/studio/{studioId}")
+    public ResponseEntity<PaginationResponse<ServicePackModel>> getByStudioId(
+            @PathVariable int studioId
+            , @RequestParam(defaultValue = "16") int pageSize
+            , @RequestParam(defaultValue = "0") int pageNo
+            , @RequestParam(defaultValue = "") String[] sort
+    ){
+        Pageable pageable = PaginationHelper.getPageable(pageNo, pageSize, sort);
+        var result = servicePackService.findByServicesByStudioId(studioId, pageable);
+        return ResponseEntity.ok(result);
+    }
+//    public ResponseEntity
     @GetMapping("name")
     public ResponseEntity<PaginationResponse<ServicePackModel>> getByName(
             @RequestParam(defaultValue = "16") int pageSize

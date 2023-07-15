@@ -56,7 +56,6 @@ public class ServicePackServiceImpl implements ServicePackService {
 	public PaginationResponse<ServicePackModel> getAll(Pageable pageable) {
 
 		var serivcePackPage =  servicePackRepository.findAll(pageable);
-
 		return getServicePackModelPaginationResponse(serivcePackPage);
 //		page.
 	}
@@ -139,6 +138,14 @@ public class ServicePackServiceImpl implements ServicePackService {
 	@Override
 	public Set<ServicePack> findByServicesByStudioId(long studioId) {
 		return servicePackRepository.findByStudioStudioId(studioId);
+	}
+
+	@Override
+	public PaginationResponse<ServicePackModel> findByServicesByStudioId(int serviceId, Pageable pageable) {
+		PaginationResponse<ServicePackModel> paginationResponse = new PaginationResponse<>();
+		Page page =  servicePackRepository.findByStudioStudioId(serviceId, pageable);
+		List<ServicePackModel> servicePackModels = servicePackMapper.toModels(page.getContent());
+		return paginationResponse.convertFromPage(page, servicePackModels);
 	}
 
 	@Override

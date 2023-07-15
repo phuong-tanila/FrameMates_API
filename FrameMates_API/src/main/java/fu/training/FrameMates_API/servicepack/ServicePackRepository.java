@@ -15,4 +15,5 @@ public interface ServicePackRepository extends JpaRepository<ServicePack, Intege
     Page<ServicePack> findByNameContaining(String name, Pageable pageable);
 
     Set<ServicePack> findByStudioStudioId(long id);
+    Page<ServicePack> findByStudioStudioId(long id, Pageable pageable);
 }
