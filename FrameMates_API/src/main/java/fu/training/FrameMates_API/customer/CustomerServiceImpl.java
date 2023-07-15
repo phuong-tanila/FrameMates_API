@@ -66,6 +66,9 @@ public class CustomerServiceImpl implements CustomerService {
 		return result.get();
 	}
 
+	public CustomerModel getCustomerModelById(int customerId) throws  RecordNotFoundException{
+		return customerMapper.toModel(getCustomerById(customerId));
+	}
 	@Override
 	public PaginationResponse<CustomerModel> getCustomerByEmailOrPhoneOrName(String searchKey, Pageable pageable, int status) {
 		PaginationResponse<CustomerModel> result = new PaginationResponse<>();

@@ -117,4 +117,11 @@ public class ApiExceptionHandler {
                 ex.getMessage()
         );
     }
+    @ExceptionHandler(IllegalAccessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleIllegalAccessException(
+            IllegalAccessException ex
+    ){
+        return new ExceptionResponse("Illegal access", ex.getMessage());
+    }
 }

@@ -2,6 +2,7 @@ package fu.training.FrameMates_API.orderdetail;
 
 import fu.training.FrameMates_API.attachment.Attachment;
 import fu.training.FrameMates_API.order.Order;
+import fu.training.FrameMates_API.order.OrderModel;
 import fu.training.FrameMates_API.servicepack.ServicePack;
 import fu.training.FrameMates_API.servicepack.ServicePackModel;
 import jakarta.persistence.*;
@@ -24,5 +25,7 @@ public class OrderDetailModel {
     private java.sql.Timestamp postDate;
 
     private ServicePackModel servicePack;
+
+    private OrderModel order;
 
 }

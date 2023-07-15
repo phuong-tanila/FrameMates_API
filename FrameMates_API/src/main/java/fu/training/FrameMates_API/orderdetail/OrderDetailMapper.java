@@ -15,6 +15,7 @@ public interface OrderDetailMapper {
     @Mapping(source = "servicePack.studio.owner.studio", target = "servicePack.studio.owner.studio", ignore = true)
     @Mapping(source = "servicePack.updateBy.studio", target = "servicePack.updateBy.studio", ignore = true)
     @Mapping(source = "servicePack.createBy.studio", target = "servicePack.createBy.studio", ignore = true)
+    @Mapping(source = "order.orderDetails", target = "order.orderDetails", ignore = true)
     OrderDetailModel toModel (OrderDetail entity);
 
     List<OrderDetail> toEntities (List<OrderDetailModel> models);

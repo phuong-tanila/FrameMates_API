@@ -39,7 +39,10 @@ public class CustomerController {
 		return customerModels != null ? new ResponseEntity<>(customerModels, HttpStatus.OK)
 				: new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
 	}
-
+	@GetMapping("{customerId}")
+	public ResponseEntity<?> getCustomerById(@PathVariable int customerId) {
+		return ResponseEntity.ok(customerService.getCustomerById(customerId));
+	}
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getAllCustomerByEmailOrPhoneOrName(

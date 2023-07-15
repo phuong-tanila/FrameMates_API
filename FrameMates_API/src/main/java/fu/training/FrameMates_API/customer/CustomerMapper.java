@@ -19,5 +19,6 @@ public interface CustomerMapper {
     CustomerModel toModel (Customer entity);
     @Mapping(target = "accountModel", source = "account")
     @Mapping(target = "accountModel.password", source = "account.password", ignore = true)
+    @Mapping(target = "accountModel.customer", source = "account.customer", ignore = true)
     List<CustomerModel> toModels (List<Customer> entities);
 }
