@@ -66,6 +66,14 @@ public class ServicePackController {
         var result = servicePackService.findByServicesByStudioId(studioId, pageable);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/studio/all/{studioId}")
+    public ResponseEntity<List<ServicePackModel>> getAllByStudioId(
+            @PathVariable int studioId
+    ){
+        var result = servicePackService.findAllByServicesByStudioId(studioId);
+        return ResponseEntity.ok(result);
+    }
 //    public ResponseEntity
     @GetMapping("name")
     public ResponseEntity<PaginationResponse<ServicePackModel>> getByName(

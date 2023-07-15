@@ -47,9 +47,10 @@ public class CustomerController {
 			@RequestParam(defaultValue = "16") int pageSize
 			, @RequestParam(defaultValue = "0") int pageNo
 			, @RequestParam(defaultValue = "") String[] sort
+			, @RequestParam(defaultValue = "2") int status
 	) {
 		Pageable pageable = PaginationHelper.getPageable(pageNo, pageSize, sort);
-		PaginationResponse<CustomerModel> customerModels = customerService.getCustomerByEmailOrPhoneOrName(emailOrPhone, pageable);
+		PaginationResponse<CustomerModel> customerModels = customerService.getCustomerByEmailOrPhoneOrName(emailOrPhone, pageable, status);
 
 		return customerModels != null ? new ResponseEntity<>(customerModels, HttpStatus.OK)
 				: new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);

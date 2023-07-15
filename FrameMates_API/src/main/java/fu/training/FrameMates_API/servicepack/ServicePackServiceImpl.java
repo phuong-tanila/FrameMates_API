@@ -15,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -138,6 +135,13 @@ public class ServicePackServiceImpl implements ServicePackService {
 	@Override
 	public Set<ServicePack> findByServicesByStudioId(long studioId) {
 		return servicePackRepository.findByStudioStudioId(studioId);
+	}
+
+	@Override
+	public List<ServicePackModel> findAllByServicesByStudioId(long studioId) {
+		Set<ServicePack> servicePacksSet = findByServicesByStudioId(studioId);
+		List<ServicePack> servicePacksList = new ArrayList<>(servicePacksSet);
+		return servicePackMapper.toModels(servicePacksList);
 	}
 
 	@Override

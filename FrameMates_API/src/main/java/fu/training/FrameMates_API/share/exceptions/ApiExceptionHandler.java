@@ -102,8 +102,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity  handleBadCredentialsException(
-            BadCredentialsException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request
+            BadCredentialsException ex
     ){
         return  new ResponseEntity(new ExceptionResponse("Invalid credentials exception", ex.getMessage()), HttpStatus.UNAUTHORIZED);
     }

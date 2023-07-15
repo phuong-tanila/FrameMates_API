@@ -21,6 +21,8 @@ public interface ServicePackService {
     ServicePackModel updateService(ServicePackModel servicePackModel, Employee employee) throws RecordNotFoundException;
 //    void deleteService(Integer serviceId) throws RecordNotFoundException;
     Set<ServicePack> findByServicesByStudioId(long studioId);
+
+    List<ServicePackModel> findAllByServicesByStudioId(long studioId);
     PaginationResponse<ServicePackModel> findByServicesByStudioId(int serviceId, Pageable pageable);
     void deleteService(Integer serviceId, Employee employee) throws RecordNotFoundException;
 }

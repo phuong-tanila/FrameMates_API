@@ -22,12 +22,17 @@ public class OrderDetailController {
 
 
 	@GetMapping("/feedback/studio")
-	public ResponseEntity getFeedbackByStudioId(@RequestParam int studioId) {
-		return new ResponseEntity<>(orderDetailService.getFeedbackByStudioId(studioId), HttpStatus.OK);
+	public ResponseEntity getFeedbacksByStudioId(@RequestParam int studioId) {
+		return new ResponseEntity<>(orderDetailService.getFeedbacksByStudioId(studioId), HttpStatus.OK);
+	}
+
+	@GetMapping("/feedback/service/{serviceId}")
+	public ResponseEntity getFeedbacksByServiceId(@PathVariable int serviceId) {
+		return new ResponseEntity<>(orderDetailService.getFeedbacksByStudioId(serviceId), HttpStatus.OK);
 	}
 	@GetMapping("/feedback/order/{orderId}")
-	public ResponseEntity getFeedbackByOrderId(@PathVariable int orderId) {
-		return new ResponseEntity<>(orderDetailService.getFeedbackByOrderId(orderId), HttpStatus.OK);
+	public ResponseEntity getFeedbacksByOrderId(@PathVariable int orderId) {
+		return new ResponseEntity<>(orderDetailService.getFeedbacksByOrderId(orderId), HttpStatus.OK);
 	}
 
 //	@GetMapping("/feedback/current-studio")

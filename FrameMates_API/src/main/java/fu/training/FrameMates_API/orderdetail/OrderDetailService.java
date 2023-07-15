@@ -7,6 +7,7 @@ import java.util.List;
 public interface OrderDetailService {
     OrderDetail createOrderDetails(OrderDetail orderDetail);
 
-    List<OrderDetailModel> getFeedbackByStudioId(int studioId);
-    List<OrderDetailModel> getFeedbackByOrderId(int orderId);
+    List<OrderDetailModel> getFeedbacksByStudioId(int studioId);
+    List<OrderDetailModel> getFeedbacksByServiceId(int studioId);
+    List<OrderDetailModel> getFeedbacksByOrderId(int orderId);
 }

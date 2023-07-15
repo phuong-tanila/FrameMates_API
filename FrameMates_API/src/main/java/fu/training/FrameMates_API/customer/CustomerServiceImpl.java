@@ -9,6 +9,7 @@ import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+	@Value("${default.customer.avatar}")
+	private String defaultAvatarUrl;
 	@Autowired
 	private CustomerMapper customerMapper;
 	@Autowired
@@ -40,8 +43,10 @@ public class CustomerServiceImpl implements CustomerService {
 		accountService.validateAccount(mappedAccount);
 		Customer customer = customerMapper.toEntity(customerModel);
 		mappedAccount.setRole("ROLE_CUSTOMER");
+		mappedAccount.setAvatar(defaultAvatarUrl);
 		customer.setAccount(mappedAccount);
 		customer.setStatus(1);
+
 		customer.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		CustomerModel returnCustomer = customerMapper.toModel(customerRepository.save(customer));
 		returnCustomer.setAccountModel(accountMapper.toModel(customer.getAccount()));
@@ -62,9 +67,14 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public PaginationResponse<CustomerModel> getCustomerByEmailOrPhoneOrName(String searchKey, Pageable pageable) {
+	public PaginationResponse<CustomerModel> getCustomerByEmailOrPhoneOrName(String searchKey, Pageable pageable, int status) {
 		PaginationResponse<CustomerModel> result = new PaginationResponse<>();
-		Page<Customer> customerPage = customerRepository.findAllByAccount_FullNameContainingOrAccount_EmailContainingOrAccount_PhoneContaining(searchKey ,searchKey , searchKey, pageable);
+		Page<Customer> customerPage = null;
+		if(status == 2) {
+			customerPage = customerRepository.findAllByAccount_FullNameContainingOrAccount_EmailContainingOrAccount_PhoneContaining(searchKey ,searchKey , searchKey, pageable);
+		}else{
+			customerPage = customerRepository.findAllByAccount_FullNameContainingOrAccount_EmailContainingOrAccount_PhoneContainingAndStatus(searchKey ,pageable, status);
+		}
 		List<Customer> customers = customerPage.getContent();
 		customers.forEach(c -> {
 			c.getAccount().setCustomer(null);

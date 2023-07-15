@@ -67,15 +67,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             );
             response.setContentType("application/json");
             response.getWriter().println(new ObjectMapper().writeValueAsString(exceptionResponse));
-        } catch(BadCredentialsException ex){
-            log.error("Bad credentials");
-            response.setStatus(FORBIDDEN.value());
-            ExceptionResponse exceptionResponse = new ExceptionResponse(
-                    "Bad credentials exception",
-                    "Your login credentials "
-            );
-            response.setContentType("application/json");
-            response.getWriter().println(new ObjectMapper().writeValueAsString(exceptionResponse));
         }
 
     }
