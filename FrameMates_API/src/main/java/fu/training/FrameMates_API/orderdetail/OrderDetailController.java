@@ -35,6 +35,13 @@ public class OrderDetailController {
 		return new ResponseEntity<>(orderDetailService.getFeedbacksByOrderId(orderId), HttpStatus.OK);
 	}
 
+	@PostMapping("/feedback/{orderDetailId}")
+	public ResponseEntity createFeedback(
+			@RequestBody OrderDetailModel model,
+			Authentication authentication
+	){
+		return ResponseEntity.ok(orderDetailService.createFeedBack(model, authentication));
+	}
 //	@GetMapping("/feedback/current-studio")
 //	public ResponseEntity getFeedbackByCurrentStudio(
 //			Authentication authentication

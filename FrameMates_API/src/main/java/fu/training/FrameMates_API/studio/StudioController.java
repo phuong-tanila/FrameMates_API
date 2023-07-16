@@ -31,6 +31,7 @@ public class StudioController {
 		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.NOT_FOUND) ;
 	}
 
+
 	@GetMapping("status/{status}")
 	public ResponseEntity getByStatus(
 			@PathVariable Integer status,
@@ -43,6 +44,13 @@ public class StudioController {
 		return new ResponseEntity<>(studioService.searchByStatus(status, searchKey, pageable), HttpStatus.OK);
 
 	}
+
+	@GetMapping("/current-owner")
+	public ResponseEntity getByCurrentOwner(Authentication authentication) {
+		StudioModel studioModel = studioService.findByCurrentOwner(authentication);
+		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.NOT_FOUND) ;
+	}
+
 	@PostMapping()
 	public ResponseEntity createStudio(
 			@RequestBody @Valid StudioModel studio,
@@ -61,11 +69,7 @@ public class StudioController {
 		StudioModel studioModel = studioService.update(id, studio);
 		return ResponseEntity.ok(studioModel);
 	}
-	@GetMapping("/current-owner")
-	public ResponseEntity getByCurrentOwner(Authentication authentication) {
-		StudioModel studioModel = studioService.findByCurrentOwner(authentication);
-		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.NOT_FOUND) ;
-	}
+
 	@PatchMapping("/{id}/status/{status}")
 	public ResponseEntity updateStudioStatus(
 		@PathVariable int id,

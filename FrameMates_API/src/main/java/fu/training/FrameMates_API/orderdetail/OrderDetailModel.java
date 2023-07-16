@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Data
 public class OrderDetailModel {
+
     private Integer orderDetailId;
 
     private Integer price;

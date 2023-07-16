@@ -21,4 +21,5 @@ public interface StudioService {
 
     PaginationResponse<StudioModel> searchByStatus(int status, String searchKey, Pageable pageable);
     StudioModel findByCurrentOwner(Authentication authentication);
+
 }

@@ -147,4 +147,5 @@ public class StudioServiceImpl implements StudioService {
 		}
 		throw new RecordNotFoundException("Can not find studio by employee id: " + employee.getEmployeeId());
 	}
+
 }
