@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -31,6 +32,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Override
 	public long count() {
 		return customerRepository.count();
@@ -115,7 +119,7 @@ public class CustomerServiceImpl implements CustomerService {
 		var customerAccount = updatingCustomer.getAccount();
 		customerAccount.setAvatar(customerModel.getAccountModel().getAvatar());
 		customerAccount.setFullName(customerModel.getAccountModel().getFullName());
-		customerAccount.setPassword(customerModel.getAccountModel().getPassword());
+		customerAccount.setPassword(passwordEncoder.encode(customerModel.getAccountModel().getPassword()));
 		customerRepository.save(updatingCustomer);
 		return null;
 	}

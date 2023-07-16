@@ -61,7 +61,7 @@ public class CustomerController {
 
 	@PatchMapping("{customerId}")
 	public  ResponseEntity updateCustomer(
-			@Valid @RequestBody CustomerModel customerModel,
+			@RequestBody CustomerModel customerModel,
 			Authentication authentication,
 			@PathVariable int customerId
 	) throws Exception {
