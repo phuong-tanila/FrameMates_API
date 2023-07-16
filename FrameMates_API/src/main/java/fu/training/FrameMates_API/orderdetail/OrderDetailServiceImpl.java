@@ -1,5 +1,7 @@
 package fu.training.FrameMates_API.orderdetail;
 
+import fu.training.FrameMates_API.account.Account;
+import fu.training.FrameMates_API.share.exceptions.MissingBearerTokenException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,10 +37,17 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}
 
 	@Override
-	public OrderDetailModel createFeedBack(OrderDetailModel model, Authentication authentication) {
+	public OrderDetailModel createFeedBack(OrderDetailModel model, Authentication authentication) throws IllegalAccessException {
+		if(authentication == null ) throw  new MissingBearerTokenException();
+		var currentUser = (Account) authentication.getPrincipal();
+		var currentCustomer = currentUser.getCustomer();
+		if(currentCustomer == null) throw  new IllegalAccessException("You are not allowed to do this function!");
+
 		var entity = orderDetailMapper.toEntity(model);
-		var entityInDb = orderDetailRepository.findById(model.getOrderDetailId()).get();
+
+		var entityInDb = orderDetailRepository.findByOrder_Customer_CustomerIdAndOrderDetailId(currentCustomer.getCustomerId(), model.getOrderDetailId());
 		if(entityInDb == null) throw new RecordNotFoundException("Specified id not found");
+
 		entityInDb.setContent(entity.getContent());
 		entityInDb.setPostDate(new Timestamp(System.currentTimeMillis()));
 		entityInDb.setRating(entity.getRating());

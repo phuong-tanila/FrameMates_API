@@ -13,5 +13,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
 
     List<OrderDetail> getOrderDetailByServicePackServiceId(int serviceId);
 
+    OrderDetail findByOrder_Customer_CustomerIdAndOrderDetailId(int customerId, int orderDetailId);
+
 
 }

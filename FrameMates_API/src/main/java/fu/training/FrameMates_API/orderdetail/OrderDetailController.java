@@ -37,9 +37,11 @@ public class OrderDetailController {
 
 	@PostMapping("/feedback/{orderDetailId}")
 	public ResponseEntity createFeedback(
+			@PathVariable int orderDetailId,
 			@RequestBody OrderDetailModel model,
 			Authentication authentication
-	){
+	) throws IllegalAccessException {
+		model.setOrderDetailId(orderDetailId);
 		return ResponseEntity.ok(orderDetailService.createFeedBack(model, authentication));
 	}
 //	@GetMapping("/feedback/current-studio")

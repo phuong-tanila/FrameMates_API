@@ -12,5 +12,5 @@ public interface OrderDetailService {
     List<OrderDetailModel> getFeedbacksByServiceId(int studioId);
     List<OrderDetailModel> getFeedbacksByOrderId(int orderId);
 
-    OrderDetailModel createFeedBack(OrderDetailModel model, Authentication authentication);
+    OrderDetailModel createFeedBack(OrderDetailModel model, Authentication authentication) throws IllegalAccessException;
 }
