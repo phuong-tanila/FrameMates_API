@@ -108,7 +108,8 @@ public class StudioServiceImpl implements StudioService {
 
 	@Override
 	public PaginationResponse<StudioModel> searchByStatus(int status, String searchKey, Pageable pageable) {
-		Page<Studio> studioPage = studioRepository.findAllByStatusAndNameContainingOrOwner_Account_FullNameContainingOrOwner_Account_EmailContaining(status, searchKey, searchKey, searchKey, pageable);
+
+		Page<Studio> studioPage = studioRepository.findAllByNameContainingOrOwner_Account_FullNameContainingOrOwner_Account_EmailContainingAndStatus(searchKey, status, pageable);
 		PaginationResponse<StudioModel> result = new PaginationResponse<>();
 		result.setPageNum(studioPage.getNumber());
 		var studioList = studioPage.getContent();

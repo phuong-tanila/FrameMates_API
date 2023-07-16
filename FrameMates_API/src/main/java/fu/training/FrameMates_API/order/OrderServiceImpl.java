@@ -14,12 +14,15 @@ import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.EnumConverter;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import fu.training.FrameMates_API.studio.Studio;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -35,6 +38,8 @@ public class OrderServiceImpl implements OrderService {
 	private ServicePackService servicePackService;
 
 	@Autowired
+	private EntityManager entityManager;
+	@Autowired
 	private AccountService accountService;
 
 	@Autowired
@@ -45,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDetailMapper orderDetailMapper;
 
 	@Override
+	@Transactional
 	public OrderModel createOrder(OrderModel orderModel) throws RecordNotFoundException {
 
 		Order orderEntity = orderMapper.toEntity(orderModel);
@@ -60,7 +66,9 @@ public class OrderServiceImpl implements OrderService {
 			var serviceId = orderDetailModel.getServicePack().getServiceId();
 			var servicePack = servicePackService.getServiceById(serviceId);
 			orderDetailEntity.setServicePack(servicePack);
-			orderDetails.add(orderDetailService.createOrderDetails(orderDetailEntity));
+			orderDetailEntity.setOrder(orderEntity);
+			orderDetails.add(orderDetailEntity);
+
 		}
 		orderEntity.setStatus(OrderStatus.PENDING.ordinal());
 		orderEntity.setOrderDetails(orderDetails);
