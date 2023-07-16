@@ -13,6 +13,7 @@ import java.util.List;
 public interface StudioService {
     long count();
 
+    void updateStudioStatus(int id, int status, Authentication authentication) throws IllegalAccessException;
     StudioModel createStudio(StudioModel studioModel, Employee employee);
     StudioModel getById(Integer id);
     List<StudioModel> getByName(String name);

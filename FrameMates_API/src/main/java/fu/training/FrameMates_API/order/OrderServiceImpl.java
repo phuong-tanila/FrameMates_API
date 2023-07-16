@@ -139,4 +139,14 @@ public class OrderServiceImpl implements OrderService {
 		return orderMapper.toModels(orders);
 	}
 
+	@Override
+	public List<OrderModel> getOrdersByCurrentUserIncludeOrderDetails(Authentication authentication) {
+		var currentAccount = (Account) authentication.getPrincipal();
+		var currentCustomer = currentAccount.getCustomer();
+
+		List<Order> orders = orderRepository.findByCustomer_CustomerIdOrderByOrderIdDesc(currentCustomer.getCustomerId());
+		return orderMapper.toModelsIncludeOrderDetails(orders);
+
+	}
+
 }

@@ -18,6 +18,8 @@ public interface CustomerService {
 
     Customer getCustomerById(int customerId) throws RecordNotFoundException;
 
+    List<CustomerModel> getCustomersByUsername(String username) throws RecordNotFoundException;
+
     CustomerModel getCustomerModelById(int customerId) throws RecordNotFoundException;
 
     PaginationResponse<CustomerModel> getCustomerByEmailOrPhoneOrName(String searchKey, Pageable pageable, int status);

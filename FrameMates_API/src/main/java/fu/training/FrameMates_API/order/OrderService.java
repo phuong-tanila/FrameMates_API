@@ -19,4 +19,6 @@ public interface OrderService {
     PaginationResponse<OrderModel> getOrdersByStatus(String status, Pageable pageable, Authentication authentication) throws InvalidStatusStringException;
 
     List<OrderModel> getFeedbackByStudioId(Integer studioId);
+
+    List<OrderModel> getOrdersByCurrentUserIncludeOrderDetails(Authentication authentication);
 }

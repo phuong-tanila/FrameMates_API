@@ -31,9 +31,14 @@ public interface OrderMapper {
     @Mapping(source = "customer.account", target = "customer.accountModel")
     @Mapping(source = "customer.account.password", target = "customer.accountModel.password", ignore = true)
     @Mapping(source = "customer.account.customer", target = "customer.accountModel.customer", ignore = true)
-
-
     List<OrderModel> toModels (List<Order> entity);
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
+    @Mapping(source = "customer.account", target = "customer.accountModel")
+    @Mapping(source = "customer.account.password", target = "customer.accountModel.password", ignore = true)
+    @Mapping(source = "customer.account.customer", target = "customer.accountModel.customer", ignore = true)
+    List<OrderModel> toModelsIncludeOrderDetails(List<Order> entities);
+
+
 
     @Named("statusEnumToString")
     default String statusEnumToString(int status) {

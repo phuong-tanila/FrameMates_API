@@ -6,12 +6,15 @@ import fu.training.FrameMates_API.account.AccountMapper;
 import fu.training.FrameMates_API.account.AccountService;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
+import fu.training.FrameMates_API.share.helpers.PaginationHelper;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +71,14 @@ public class CustomerServiceImpl implements CustomerService {
 		Optional<Customer> result = customerRepository.findByCustomerIdAndStatus(customerId, 1);
 		if(result.isEmpty()) throw new RecordNotFoundException("Can't find customer by id: " + customerId);
 		return result.get();
+	}
+
+	@Override
+	public List<CustomerModel> getCustomersByUsername(String username) throws RecordNotFoundException {
+		Pageable pageable = PageRequest.of(0, 5);
+		Page page = customerRepository.findAllByAccount_UsernameContainingAndStatus(username, 1, pageable);
+		List<Customer> result = page.getContent();
+		return customerMapper.toModels(result);
 	}
 
 	public CustomerModel getCustomerModelById(int customerId) throws  RecordNotFoundException{

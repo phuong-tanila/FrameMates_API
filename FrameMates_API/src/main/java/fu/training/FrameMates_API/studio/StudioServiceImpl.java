@@ -11,6 +11,7 @@ import fu.training.FrameMates_API.employee.Employee;
 import fu.training.FrameMates_API.employee.EmployeeMapper;
 import fu.training.FrameMates_API.employee.EmployeeModel;
 import fu.training.FrameMates_API.employee.EmployeeRepository;
+import fu.training.FrameMates_API.share.exceptions.MissingBearerTokenException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
 import jakarta.persistence.EntityManager;
@@ -54,6 +55,17 @@ public class StudioServiceImpl implements StudioService {
 	@Override
 	public long count() {
 		return studioRepository.count();
+	}
+
+	@Override
+	public void updateStudioStatus(int id, int status, Authentication authentication) throws IllegalAccessException {
+		if(authentication == null ) throw  new MissingBearerTokenException();
+		var currentAccount = (Account) authentication.getPrincipal();
+		if(currentAccount.getAdministrator() == null) throw new IllegalAccessException("You are not permitted to use this function");
+		Studio s = getStudio(id);
+		s.setStatus(status);
+		s.setAdmin(currentAccount.getAdministrator());
+		studioRepository.save(s);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package fu.training.FrameMates_API.studio;
 
 import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.customer.CustomerModel;
+import fu.training.FrameMates_API.share.exceptions.MissingBearerTokenException;
 import fu.training.FrameMates_API.share.helpers.PaginationHelper;
 import fu.training.FrameMates_API.studio.StudioService;
 import jakarta.validation.Valid;
@@ -64,5 +65,15 @@ public class StudioController {
 	public ResponseEntity getByCurrentOwner(Authentication authentication) {
 		StudioModel studioModel = studioService.findByCurrentOwner(authentication);
 		return studioModel != null ? ResponseEntity.ok(studioModel) : new ResponseEntity<>("Studio not found",HttpStatus.NOT_FOUND) ;
+	}
+	@PatchMapping("/{id}/status/{status}")
+	public ResponseEntity updateStudioStatus(
+		@PathVariable int id,
+		@PathVariable int status,
+		Authentication authentication
+	) throws IllegalAccessException {
+
+		studioService.updateStudioStatus(id, status, authentication);
+		return ResponseEntity.ok().build();
 	}
 }

@@ -19,4 +19,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Page<Customer> findAllByAccount_FullNameContainingOrAccount_EmailContainingOrAccount_PhoneContainingAndStatus(String searchKey, Pageable pageable, int status);
 
     Optional<Customer> findByCustomerIdAndStatus(int id, int status);
+
+    Page<Customer> findAllByAccount_UsernameContainingAndStatus(String username, int status, Pageable pageable);
+
+
 }

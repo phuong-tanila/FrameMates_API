@@ -33,6 +33,12 @@ public class OrderController {
 		return new ResponseEntity(orderService.getOrderById(id), HttpStatus.OK);
 	}
 
+	@GetMapping("/current-customer")
+	public ResponseEntity getOrdersByCurrentUserIncludeOrderDetails(
+			Authentication authentication
+	){
+		return ResponseEntity.ok(orderService.getOrdersByCurrentUserIncludeOrderDetails(authentication));
+	}
 	@GetMapping("/status")
 	public ResponseEntity getOrdersByStatus(
 			@RequestParam String status,

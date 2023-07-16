@@ -17,4 +17,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByOrderDetails_ServicePack_Studio_StudioIdAndOrderDetails_RatingNotNull(int studioID);
     List<Order> findByCustomer_CustomerIdOrderByOrderIdDesc(int customerId);
+
+
 }
