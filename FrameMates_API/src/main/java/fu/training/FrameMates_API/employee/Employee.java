@@ -45,7 +45,7 @@ public class Employee implements Serializable {
 	@JoinColumn(name="AccountId", referencedColumnName="AccountId", nullable=false)
 	private Account account;
 
-	@OneToOne(mappedBy = "owner")
+	@OneToOne(mappedBy = "owner", fetch=FetchType.EAGER)
 	private Studio owner;
 
 	@OneToOne(mappedBy = "subAdminStudio")

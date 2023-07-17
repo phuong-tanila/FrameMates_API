@@ -14,15 +14,26 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/album")
+@RequestMapping("/api/albums")
 public class AlbumController {
 
 	@Autowired
 	private AlbumService albumService;
 
+	@GetMapping("/studio/{studioId}")
+	public List<AlbumModel> getAllByStudioId(@PathVariable int studioId){
+		return albumService.getAlbumsByStudioId(studioId);
+	}
+
+	@GetMapping("/studio/current")
+	public List<AlbumModel> getAllByCurrentStudio(Authentication authentication){
+		return albumService.getAlbumsByByCurrentStudio(authentication);
+	}
 	@PreAuthorize("hasRole('EMPLOYEE')")
 	@PostMapping
 	public AlbumModel createAlbum(
@@ -35,12 +46,13 @@ public class AlbumController {
 	}
 	@PreAuthorize("hasRole('EMPLOYEE')")
 	@DeleteMapping("{id}")
-	public AlbumModel deleteAlbum(
+	public ResponseEntity deleteAlbum(
 			@PathVariable int id,
 			Authentication authentication
-	) throws ExecutionControl.NotImplementedException {
+	) {
 		Account currentAccount = (Account) authentication.getPrincipal();
-
-		return albumService.deleteAlbum(id, currentAccount.getEmployee());
+		albumService.deleteAlbum(id, currentAccount.getEmployee());
+		return ResponseEntity.ok().build();
 	}
+
 }

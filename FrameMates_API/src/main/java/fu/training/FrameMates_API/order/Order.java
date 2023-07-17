@@ -20,7 +20,6 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 @Transactional
 @JsonSerialize
@@ -62,8 +61,8 @@ public class Order implements Serializable {
 	private Payment payment;
 
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity= OrderDetail.class)
-	private Set<OrderDetail> order_OrderDetail;
+	private Set<OrderDetail> orderDetails;
 	
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity= VoucherDetail.class)
-	private Set<VoucherDetail> order_VoucherDetail;
+	private Set<VoucherDetail> voucherDetails;
 }

@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,9 +67,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             );
             response.setContentType("application/json");
             response.getWriter().println(new ObjectMapper().writeValueAsString(exceptionResponse));
-        } catch (Exception ex) {
-            log.error("failed on set user authentication");
-            ex.printStackTrace();
         }
 
     }

@@ -1,6 +1,7 @@
 package fu.training.FrameMates_API.account;
 
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
+import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,6 +39,21 @@ public class  AccountServiceImpl implements AccountService, UserDetailsService {
     public Account createAccount(Account account){
         return accountRepository.save(account);
     }
+
+    @Override
+    public Account findAccountByEmployeeId(int employeeId) throws RecordNotFoundException {
+        Account result = accountRepository.findByEmployeeEmployeeId(employeeId);
+        if(result == null) throw  new RecordNotFoundException("Employee id not found");
+        return result;
+    }
+
+    @Override
+    public Account findAccountByCustomerId(int customerId) throws RecordNotFoundException {
+        Account result = accountRepository.findByCustomer_CustomerId(customerId);
+        if(result == null) throw  new RecordNotFoundException("Customer id not found");
+        return result;
+    }
+
     @Override
     public void validateAccount(Account mappedAccount) throws DupplicatedUserInfoException {
         List<Account> accountList = findAccountsByUsernameOrPhone(mappedAccount.getUsername(), mappedAccount.getPhone());

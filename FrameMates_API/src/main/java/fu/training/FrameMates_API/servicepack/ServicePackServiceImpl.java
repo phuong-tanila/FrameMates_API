@@ -15,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -56,7 +53,6 @@ public class ServicePackServiceImpl implements ServicePackService {
 	public PaginationResponse<ServicePackModel> getAll(Pageable pageable) {
 
 		var serivcePackPage =  servicePackRepository.findAll(pageable);
-
 		return getServicePackModelPaginationResponse(serivcePackPage);
 //		page.
 	}
@@ -99,11 +95,12 @@ public class ServicePackServiceImpl implements ServicePackService {
 		servicePackModel.setRating(Double.valueOf(0));
 		servicePackModel.setView(0);
 		servicePackModel.setDiscount(0);
-		log.error(ServiceStatus.CREATED.toString());
 		String serviceStatus = EnumConverter.convertEnumValueToString(ServiceStatus.CREATED.ordinal(), ServiceStatus.class);
 //		servicePackModel.setStatus(serviceStatus);
 		log.error(serviceStatus);
 		ServicePack service = servicePackMapper.toEntity(servicePackModel);
+		ServicePack tmpService = service;
+		service.getServicePack_mediaService().forEach(f -> f.setServicePack(tmpService));
 		service.setStudio(employee.getStudio());
 		service.setStatus(ServiceStatus.CREATED.ordinal());
 		service = servicePackRepository.save(service);
@@ -138,6 +135,21 @@ public class ServicePackServiceImpl implements ServicePackService {
 	@Override
 	public Set<ServicePack> findByServicesByStudioId(long studioId) {
 		return servicePackRepository.findByStudioStudioId(studioId);
+	}
+
+	@Override
+	public List<ServicePackModel> findAllByServicesByStudioId(long studioId) {
+		Set<ServicePack> servicePacksSet = findByServicesByStudioId(studioId);
+		List<ServicePack> servicePacksList = new ArrayList<>(servicePacksSet);
+		return servicePackMapper.toModels(servicePacksList);
+	}
+
+	@Override
+	public PaginationResponse<ServicePackModel> findByServicesByStudioId(int serviceId, Pageable pageable) {
+		PaginationResponse<ServicePackModel> paginationResponse = new PaginationResponse<>();
+		Page page =  servicePackRepository.findByStudioStudioId(serviceId, pageable);
+		List<ServicePackModel> servicePackModels = servicePackMapper.toModels(page.getContent());
+		return paginationResponse.convertFromPage(page, servicePackModels);
 	}
 
 	@Override

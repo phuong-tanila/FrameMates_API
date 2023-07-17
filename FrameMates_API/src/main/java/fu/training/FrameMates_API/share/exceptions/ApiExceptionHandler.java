@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -95,14 +96,32 @@ public class ApiExceptionHandler {
     public ResponseEntity handleInvalidEnumString(
             InvalidStatusStringException ex
     ){
-        return new ResponseEntity(new ExceptionResponse("Invalid staus", ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(new ExceptionResponse("Invalid status", ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler(HttpClientErrorException.MethodNotAllowed.class)
+
+    @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String  handleMethodArgumentNotAllowed(
-            HttpRequestMethodNotSupportedException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request
+    public ResponseEntity  handleBadCredentialsException(
+            BadCredentialsException ex
     ){
-        return "123";
+        return  new ResponseEntity(new ExceptionResponse("Invalid credentials exception", ex.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(MissingBearerTokenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleMissingBearerTokenException(
+            MissingBearerTokenException ex, WebRequest request
+    ){
+        return new ExceptionResponse(
+                "Record not found",
+                ex.getMessage()
+        );
+    }
+    @ExceptionHandler(IllegalAccessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleIllegalAccessException(
+            IllegalAccessException ex
+    ){
+        return new ExceptionResponse("Illegal access", ex.getMessage());
     }
 }

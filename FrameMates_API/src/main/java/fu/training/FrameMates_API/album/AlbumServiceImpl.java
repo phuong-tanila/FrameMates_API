@@ -9,11 +9,14 @@ import fu.training.FrameMates_API.studio.StudioMapper;
 import fu.training.FrameMates_API.studio.StudioService;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
@@ -48,8 +51,20 @@ public class AlbumServiceImpl implements AlbumService {
 	}
 
 	@Override
-	public AlbumModel deleteAlbum(int id, Employee employee) throws ExecutionControl.NotImplementedException {
+	public void deleteAlbum(int id, Employee employee) throws RecordNotFoundException{
 		if(employee == null) throw new IllegalArgumentException("you must has employee role to do this function");
-		throw new ExecutionControl.NotImplementedException("Not implemented");
+		Optional<Album> otnAlbum = albumRepository.findById(id);
+		if(otnAlbum.isEmpty()) throw new RecordNotFoundException("Album id not found!!");
+		albumRepository.delete(otnAlbum.get());
+	}
+
+	@Override
+	public List<AlbumModel> getAlbumsByStudioId(int studioId) {
+		return albumMapper.toModels(albumRepository.findByStudio_StudioId(studioId));
+	}
+
+	@Override
+	public List<AlbumModel> getAlbumsByByCurrentStudio(Authentication authentication) {
+		return null;
 	}
 }

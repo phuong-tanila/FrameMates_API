@@ -12,4 +12,6 @@ public class AdministratorModel {
     private Integer adminId;
 
     private Integer status;
+
+    private AccountModel accountModel;
 }

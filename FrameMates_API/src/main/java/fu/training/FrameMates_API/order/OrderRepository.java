@@ -12,4 +12,11 @@ import java.util.Set;
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 //    Order createOrder(Order order);
     Page<Order> findOrdersByStatus(int status, Pageable pageable);
+
+    List<Order> findByOrderDetails_ServicePack_Studio_StudioIdOrderByOrderIdDesc(int studioID);
+
+    List<Order> findByOrderDetails_ServicePack_Studio_StudioIdAndOrderDetails_RatingNotNull(int studioID);
+    List<Order> findByCustomer_CustomerIdOrderByOrderIdDesc(int customerId);
+
+
 }

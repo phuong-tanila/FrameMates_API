@@ -18,6 +18,7 @@ public interface EmployeeMapper {
 
     Employee toEntity (EmployeeModel model);
 
-
+    @Mapping(source = "studio", target = "studio", ignore = true)
+    @Mapping(source = "account.employee", target = "accountModel.employee", ignore = true)
     EmployeeModel toModel (Employee entity);
 }

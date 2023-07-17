@@ -9,6 +9,7 @@ import fu.training.FrameMates_API.customer.CustomerModel;
 import fu.training.FrameMates_API.share.exceptions.DupplicatedUserInfoException;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,8 @@ import java.sql.Timestamp;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-
+	@Value("${default.customer.avatar}")
+	private String defaultAvatarUrl;
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	@Autowired
@@ -32,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		accountService.validateAccount(mappedAccount);
 		Employee employee = employeeMapper.toEntity(employeeModel);
 		mappedAccount.setRole("ROLE_EMPLOYEE");
+		mappedAccount.setAvatar(defaultAvatarUrl);
 
 		employee.setAccount(mappedAccount);
 		employee.setEmployeeId(null);
@@ -55,12 +58,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public Employee updateEmployeeUsingEntity(Employee employee) {
+		return employeeRepository.save(employee);
+	}
+
+	@Override
 	public Employee findByEmployeeId(int employeeId) throws RecordNotFoundException {
 		Employee result = employeeRepository.findById(employeeId).get();
 		if(result != null)
 			return result;
 		throw new RecordNotFoundException("Can not find employee by id: " + employeeId);
 	}
+
+
+
 
 	@Override
 	public EmployeeModel getCurrentEmployee(Authentication authentication) throws RecordNotFoundException {

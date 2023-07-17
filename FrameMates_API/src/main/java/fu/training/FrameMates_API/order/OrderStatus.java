@@ -5,5 +5,10 @@ public enum OrderStatus {
     DEPOSITED,
     WORKED,
     COMPLETED,
-    CANCELED
+    CANCEL,
+
+    ACCEPTED,
+
+    ABORTED,
+
 }

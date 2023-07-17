@@ -3,6 +3,7 @@ package fu.training.FrameMates_API.servicepack;
 import fu.training.FrameMates_API.employee.Employee;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_API.share.helpers.PaginationResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -20,5 +21,8 @@ public interface ServicePackService {
     ServicePackModel updateService(ServicePackModel servicePackModel, Employee employee) throws RecordNotFoundException;
 //    void deleteService(Integer serviceId) throws RecordNotFoundException;
     Set<ServicePack> findByServicesByStudioId(long studioId);
+
+    List<ServicePackModel> findAllByServicesByStudioId(long studioId);
+    PaginationResponse<ServicePackModel> findByServicesByStudioId(int serviceId, Pageable pageable);
     void deleteService(Integer serviceId, Employee employee) throws RecordNotFoundException;
 }
