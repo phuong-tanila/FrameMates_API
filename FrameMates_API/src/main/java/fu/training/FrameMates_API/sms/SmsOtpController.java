@@ -19,11 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class SmsOtpController {
     @Autowired
     private SmsOtpService smsOtpService;
-    @Getter @Setter
-    private class SmsOtpRequest{
-
-        private String phoneNumber;
-    }
     @PostMapping("")
     public ResponseEntity sendOtp(@RequestBody SmsOtpModel smsModel){
 
@@ -33,14 +28,12 @@ public class SmsOtpController {
         );
     }
 
-    @GetMapping("/{otpId}")
+    @PostMapping("/verify")
     // remember to encode phoneNumber (from + to %2B)
     public ResponseEntity verifyOtp(
-            @RequestParam String phoneNumber,
-            @PathVariable Integer otpId,
-            @RequestParam String value
+            @RequestBody @Valid SmsOtpModel model
             ) throws InvalidOtpException {
-        return ResponseEntity.ok(smsOtpService.verifyOTP(otpId, phoneNumber, value));
+        return ResponseEntity.ok(smsOtpService.verifyOTP(model.getOtpId(), model.getPhoneNumber(), model.getOtpValue()));
     }
 
 }
