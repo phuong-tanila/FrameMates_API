@@ -37,6 +37,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}
 
 	@Override
+	public List<OrderDetailModel> getOrderDetailsByOrderId(int orderId) {
+		return orderDetailMapper.toModels(orderDetailRepository.getOrderDetailByOrder_OrderId(orderId));
+	}
+
+	@Override
 	public OrderDetailModel createFeedBack(OrderDetailModel model, Authentication authentication) throws IllegalAccessException {
 		if(authentication == null ) throw  new MissingBearerTokenException();
 		var currentUser = (Account) authentication.getPrincipal();

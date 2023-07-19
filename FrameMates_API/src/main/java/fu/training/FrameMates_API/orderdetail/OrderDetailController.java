@@ -21,6 +21,11 @@ public class OrderDetailController {
 	private OrderDetailService orderDetailService;
 
 
+	@GetMapping("/order/{orderId}")
+	public ResponseEntity getOrderDetailsByOrderId(@PathVariable int orderId){
+		return new ResponseEntity(orderDetailService.getOrderDetailsByOrderId(orderId), HttpStatus.OK);
+	}
+
 	@GetMapping("/feedback/studio")
 	public ResponseEntity getFeedbacksByStudioId(@RequestParam int studioId) {
 		return new ResponseEntity<>(orderDetailService.getFeedbacksByStudioId(studioId), HttpStatus.OK);
