@@ -10,8 +10,9 @@ import java.util.List;
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
     List<OrderDetail> getOrderDetailByServicePack_Studio_StudioIdAndRatingNotNull(int studioId);
     List<OrderDetail> getOrderDetailByOrder_OrderId(int studioId);
+    List<OrderDetail> getOrderDetailByOrder_OrderIdAndRatingNotNull(int studioId);
 
-    List<OrderDetail> getOrderDetailByServicePackServiceId(int serviceId);
+    List<OrderDetail> getOrderDetailByServicePack_ServiceIdAndRatingNotNull(int serviceId);
 
     OrderDetail findByOrder_Customer_CustomerIdAndOrderDetailId(int customerId, int orderDetailId);
 

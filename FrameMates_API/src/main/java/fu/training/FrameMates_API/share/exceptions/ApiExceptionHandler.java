@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -141,5 +142,13 @@ public class ApiExceptionHandler {
             DisabledException ex
     ){
         return new ExceptionResponse("Disabled account", "Account was banned");
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ExceptionResponse handleSignatureException(
+            SignatureException ex
+    ){
+        return new ExceptionResponse("Invalid jwt token", "Invalid jwt token");
     }
 }

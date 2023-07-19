@@ -28,7 +28,7 @@ public class OrderDetailController {
 
 	@GetMapping("/feedback/service/{serviceId}")
 	public ResponseEntity getFeedbacksByServiceId(@PathVariable int serviceId) {
-		return new ResponseEntity<>(orderDetailService.getFeedbacksByStudioId(serviceId), HttpStatus.OK);
+		return new ResponseEntity<>(orderDetailService.getFeedbacksByServiceId(serviceId), HttpStatus.OK);
 	}
 	@GetMapping("/feedback/order/{orderId}")
 	public ResponseEntity getFeedbacksByOrderId(@PathVariable int orderId) {
