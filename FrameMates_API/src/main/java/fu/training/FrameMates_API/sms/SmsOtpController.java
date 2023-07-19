@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/otp")
+@RequestMapping("/api/otp")
 public class SmsOtpController {
     @Autowired
     private SmsOtpService smsOtpService;
@@ -25,7 +25,7 @@ public class SmsOtpController {
         private String phoneNumber;
     }
     @PostMapping("")
-    public ResponseEntity sendOtp(@RequestBody @Valid SmsOtpModel smsModel){
+    public ResponseEntity sendOtp(@RequestBody SmsOtpModel smsModel){
 
         return new ResponseEntity(
                 smsOtpService.sendOtp(smsModel.getPhoneNumber()),

@@ -47,11 +47,11 @@ public class TwilioSmsOtpServiceImpl implements SmsOtpService {
         SmsOtp sms = new SmsOtp();
         String body = smsConfig.getOtpBodyTemplate() + otp;
         PhoneNumber toPhoneNumber = new PhoneNumber(phoneNumber);
-//        Message message = Message.creator(
-//                toPhoneNumber,
-//                fromPhoneNumber,
-//                body
-//        ).create();
+        Message message = Message.creator(
+                toPhoneNumber,
+                fromPhoneNumber,
+                body
+        ).create();
         sms.setOtpValue(otp);
         sms.setCreateAt(new Timestamp(new Date().getTime()));
         sms.setExpiredAt(new Timestamp(new Date().getTime() + smsConfig.getOtpExpiration()));

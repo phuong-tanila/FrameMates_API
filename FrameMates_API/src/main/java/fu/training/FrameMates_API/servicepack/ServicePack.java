@@ -93,6 +93,9 @@ public class ServicePack implements Serializable {
 		return getServiceId() == that.getServiceId();
 	}
 
+	public boolean isActive(){
+		return this.status == 1;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(getServiceId());

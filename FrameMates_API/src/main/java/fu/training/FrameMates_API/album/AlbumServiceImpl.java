@@ -35,14 +35,12 @@ public class AlbumServiceImpl implements AlbumService {
 	@Autowired
 	private StudioService studioService;
 	@Override
-	public AlbumModel createAlbum(AlbumModel albumModel, Employee employee) {
-		if(employee.getStudio() == null) throw new RecordNotFoundException("You must own or work for a studio to take this action");
+	public AlbumModel createAlbum(AlbumModel albumModel) {
 		var album = albumMapper.toEntity(albumModel);
 		album.setAlbumId(null);
 		album.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		album.setView(0);
 		album.getAlbum_mediaFile().forEach(f -> f.setAlbum(album));
-		album.setStudio(employee.getStudio());
 		album.getAlbum_mediaFile().forEach(mediaFile -> {
 			mediaFile.setView(0);
 			mediaFile.setUploadDate(new Timestamp(System.currentTimeMillis()));

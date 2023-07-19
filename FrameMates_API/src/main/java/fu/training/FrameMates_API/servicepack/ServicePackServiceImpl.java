@@ -44,7 +44,7 @@ public class ServicePackServiceImpl implements ServicePackService {
 //	private
 	@Override
 	public List<ServicePackModel> getAll() {
-		List<ServicePack> listService = servicePackRepository.findAll();
+		List<ServicePack> listService = servicePackRepository.findAll().stream().filter(ServicePack::isActive).toList();
 		return servicePackMapper.toModels(listService);
 	}
 
