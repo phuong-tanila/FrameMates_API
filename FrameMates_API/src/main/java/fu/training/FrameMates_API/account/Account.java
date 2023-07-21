@@ -91,7 +91,13 @@ public class Account implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        if(employee != null){
+            return employee.getStatus() == 1;
+        }else if(customer != null){
+            return customer.getStatus() == 1;
+        }else {
+            return administrator.getStatus() == 1;
+        }
     }
 
 }

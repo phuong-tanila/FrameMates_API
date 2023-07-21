@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AlbumService {
 
-    AlbumModel createAlbum(AlbumModel albumModel, Employee employee);
+    AlbumModel createAlbum(AlbumModel albumModel);
 
     void deleteAlbum(int id, Employee employee) throws RecordNotFoundException;
 

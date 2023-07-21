@@ -57,6 +57,7 @@ public class TwilioSmsOtpServiceImpl implements SmsOtpService {
         sms.setExpiredAt(new Timestamp(new Date().getTime() + smsConfig.getOtpExpiration()));
         sms.setPhoneNumber(phoneNumber);
         sms = smsOtpRepository.save(sms);
+        sms.setOtpValue(null);
         return mapper.toModel(sms);
     }
 

@@ -11,6 +11,6 @@ public interface OrderDetailService {
     List<OrderDetailModel> getFeedbacksByStudioId(int studioId);
     List<OrderDetailModel> getFeedbacksByServiceId(int studioId);
     List<OrderDetailModel> getFeedbacksByOrderId(int orderId);
-
+    List<OrderDetailModel> getOrderDetailsByOrderId(int orderId);
     OrderDetailModel createFeedBack(OrderDetailModel model, Authentication authentication) throws IllegalAccessException;
 }

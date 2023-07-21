@@ -4,6 +4,9 @@ import fu.training.FrameMates_API.account.Account;
 import fu.training.FrameMates_API.album.AlbumService;
 import fu.training.FrameMates_API.servicepack.ServicePackModel;
 import fu.training.FrameMates_API.share.exceptions.RecordNotFoundException;
+import fu.training.FrameMates_API.studio.StudioMapper;
+import fu.training.FrameMates_API.studio.StudioModel;
+import fu.training.FrameMates_API.studio.StudioService;
 import jakarta.validation.Valid;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +27,8 @@ public class AlbumController {
 
 	@Autowired
 	private AlbumService albumService;
-
+	@Autowired
+	private StudioMapper studioMapper;
 	@GetMapping("/studio/{studioId}")
 	public List<AlbumModel> getAllByStudioId(@PathVariable int studioId){
 		return albumService.getAlbumsByStudioId(studioId);
@@ -41,8 +45,11 @@ public class AlbumController {
 			Authentication authentication
 	){
 		Account currentAccount = (Account) authentication.getPrincipal();
-
-		return albumService.createAlbum(model, currentAccount.getEmployee());
+		var employee = currentAccount.getEmployee();
+		if(employee.getStudio() == null) throw new RecordNotFoundException("You must own or work for a studio to take this action");
+		StudioModel studioModel = studioMapper.toModel(employee.getStudio());
+		model.setStudio(studioModel);
+		return albumService.createAlbum(model);
 	}
 	@PreAuthorize("hasRole('EMPLOYEE')")
 	@DeleteMapping("{id}")

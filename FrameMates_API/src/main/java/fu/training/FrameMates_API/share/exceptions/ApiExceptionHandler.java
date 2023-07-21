@@ -1,10 +1,12 @@
 package fu.training.FrameMates_API.share.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fu.training.FrameMates_API.sms.SmsOtpModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -123,5 +126,29 @@ public class ApiExceptionHandler {
             IllegalAccessException ex
     ){
         return new ExceptionResponse("Illegal access", ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidOtpException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleInvalidOtpException(
+            InvalidOtpException ex
+    ){
+        return new ExceptionResponse("Invalid otp", ex.getMessage());
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ExceptionResponse handleDisabledException(
+            DisabledException ex
+    ){
+        return new ExceptionResponse("Disabled account", "Account was banned");
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ExceptionResponse handleSignatureException(
+            SignatureException ex
+    ){
+        return new ExceptionResponse("Invalid jwt token", "Invalid jwt token");
     }
 }

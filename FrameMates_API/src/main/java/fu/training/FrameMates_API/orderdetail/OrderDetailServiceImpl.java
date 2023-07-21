@@ -28,11 +28,16 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 	@Override
 	public List<OrderDetailModel> getFeedbacksByServiceId(int serviceId) {
-		return orderDetailMapper.toModels(orderDetailRepository.getOrderDetailByServicePackServiceId(serviceId));
+		return orderDetailMapper.toModels(orderDetailRepository.getOrderDetailByServicePack_ServiceIdAndRatingNotNull(serviceId));
 	}
 
 	@Override
 	public List<OrderDetailModel> getFeedbacksByOrderId(int orderId) {
+		return orderDetailMapper.toModels(orderDetailRepository.getOrderDetailByOrder_OrderIdAndRatingNotNull(orderId));
+	}
+
+	@Override
+	public List<OrderDetailModel> getOrderDetailsByOrderId(int orderId) {
 		return orderDetailMapper.toModels(orderDetailRepository.getOrderDetailByOrder_OrderId(orderId));
 	}
 

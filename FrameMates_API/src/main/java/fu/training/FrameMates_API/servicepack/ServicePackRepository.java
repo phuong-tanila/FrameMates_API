@@ -14,7 +14,7 @@ import java.util.Set;
 public interface ServicePackRepository extends JpaRepository<ServicePack, Integer> {
 
     Page<ServicePack> findByNameContaining(String name, Pageable pageable);
-
+    @Query("select sv from ServicePack sv where sv.studio.studioId = :id and sv.status = 1")
     Set<ServicePack> findByStudioStudioId(long id);
     @Query("select sv from ServicePack sv where sv.studio.studioId = :id and sv.status = 1")
     Page<ServicePack> findByStudioStudioId(long id, Pageable pageable);

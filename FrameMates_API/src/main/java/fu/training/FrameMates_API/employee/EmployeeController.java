@@ -30,6 +30,11 @@ public class EmployeeController {
 		EmployeeModel employeeModel = employeeService.createEmployee(employee);
 		return ResponseEntity.ok(employeeModel);
 	}
+	@PostMapping("/validate")
+	public ResponseEntity validateEmployee(@RequestBody @Valid EmployeeModel employee) throws DupplicatedUserInfoException {
+
+		return ResponseEntity.ok().build();
+	}
 
 	@GetMapping("/{accountId}")
 	public ResponseEntity getByAccountId(@PathVariable int accountId) throws RecordNotFoundException {
