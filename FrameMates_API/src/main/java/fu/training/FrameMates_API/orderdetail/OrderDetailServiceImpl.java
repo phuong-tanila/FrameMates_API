@@ -50,12 +50,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 		var entity = orderDetailMapper.toEntity(model);
 
-		var entityInDb = orderDetailRepository.findByOrder_Customer_CustomerIdAndOrderDetailId(currentCustomer.getCustomerId(), model.getOrderDetailId());
-		if(entityInDb == null) throw new RecordNotFoundException("Specified id not found");
+		var feedback = orderDetailRepository.findByOrder_Customer_CustomerIdAndOrderDetailId(currentCustomer.getCustomerId(), model.getOrderDetailId());
+		if(feedback == null) throw new RecordNotFoundException("Specified id not found");
 
-		entityInDb.setContent(entity.getContent());
-		entityInDb.setPostDate(new Timestamp(System.currentTimeMillis()));
-		entityInDb.setRating(entity.getRating());
-		return orderDetailMapper.toModel(orderDetailRepository.save(entityInDb));
+		feedback.setContent(entity.getContent());
+		feedback.setPostDate(new Timestamp(System.currentTimeMillis()));
+		feedback.setRating(entity.getRating());
+		return orderDetailMapper.toModel(orderDetailRepository.save(feedback));
 	}
 }

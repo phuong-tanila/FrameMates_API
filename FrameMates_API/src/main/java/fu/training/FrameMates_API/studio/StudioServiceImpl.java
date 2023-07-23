@@ -72,11 +72,11 @@ public class StudioServiceImpl implements StudioService {
 	@Transactional
 	public StudioModel createStudio(StudioModel studioModel, Employee employee) {
 		if(employee == null) throw new IllegalArgumentException("You must be employee to do this function");
-		if(studioRepository.findByOwner_EmployeeId(employee.getEmployeeId()) != null){
+		if(studioRepository.findByOwner_EmployeeIdAndStatusNot(employee.getEmployeeId(), -1) != null){
 			throw new IllegalArgumentException("You must not own a studio to do this function");
 		}
 		studioModel.setBalance(0);
-		studioModel.setStatus(1);
+		studioModel.setStatus(0);
 		studioModel.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		studioModel.setTotalRating((double) 0);
 
@@ -110,9 +110,6 @@ public class StudioServiceImpl implements StudioService {
 		studio.setName(studioModel.getName());
 		studio.setAddress(studioModel.getAddress());
 		studio.setDescription(studioModel.getDescription());
-		studio.setStatus(studioModel.getStatus());
-		studio.setTotalRating(studioModel.getTotalRating());
-		studio.setBalance(studio.getBalance());
 		studio.setAvatarStudio(studioModel.getAvatarStudio());
 		studio.setCoverImage(studioModel.getCoverImage());
 		return studioMapper.toModel(studioRepository.save(studio));
@@ -137,8 +134,8 @@ public class StudioServiceImpl implements StudioService {
 	}
 	public StudioModel findByCurrentOwner(Authentication authentication) throws RecordNotFoundException {
 		Account account = (Account) authentication.getPrincipal();
-		Employee employee = employeeRepository.findByAccountAccountId(account.getAccountId());
-		Studio studio = studioRepository.findByOwner_EmployeeId(employee.getEmployeeId());
+		Employee employee = account.getEmployee();
+		Studio studio = studioRepository.findByOwner_EmployeeIdAndStatusNot(employee.getEmployeeId(), -1);
 		StudioModel studioModel = studioMapper.toModel(studio);
 		if(studioModel != null) {
 			EmployeeModel owner = employeeMapper.toModel(employee);

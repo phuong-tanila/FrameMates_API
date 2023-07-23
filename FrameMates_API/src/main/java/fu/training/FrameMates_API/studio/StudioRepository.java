@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, Integer> {
     List<Studio> findAllByNameContains(String name);
-    Studio findByOwner_EmployeeId(int employeeId);
+    Studio findByOwner_EmployeeIdAndStatusNot(int employeeId, int status);
 
     Page<Studio> findAllByNameContainingOrOwner_Account_FullNameContainingOrOwner_Account_EmailContaining(String name, String fullname, String email, Pageable pageable);
     @Query("select s from Studio s where s.status = :status and (s.owner.account.email like concat('%', :searchKey, '%') or s.owner.account.fullName like concat('%', :searchKey, '%') or s.name like concat('%', :searchKey, '%'))")
